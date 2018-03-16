@@ -1,0 +1,118 @@
+commit 1e8172e2e88b453aca65f285cce946522e4d73fb
+Author: Antti Lammi <antti.lammi.23@gmail.com>
+Date:   Fri Mar 16 15:04:08 2018 +0200
+
+    poistettu file1, uudelleennimetty file2 -> file22, muita muutoksia ei commitattu
+    
+     tiedostoja/file1  | 0
+      tiedostoja/file2  | 0
+       tiedostoja/file22 | 0
+        3 files changed, 0 insertions(+), 0 deletions(-)
+        
+        commit 1100435ed97f7228a5eac5b082292d1455065b43
+        Author: Antti Lammi <antti.lammi.23@gmail.com>
+        Date:   Fri Mar 16 15:00:58 2018 +0200
+        
+            lisätty tiedostoja
+            
+             tiedostoja/file1 | 0
+              tiedostoja/file2 | 0
+               tiedostoja/file3 | 0
+                3 files changed, 0 insertions(+), 0 deletions(-)
+                
+                commit e3d0baabe7ec8abd898bd0fdc39a8aaaa1f9b34d
+                Author: Antti Lammi <antti.lammi.23@gmail.com>
+                Date:   Fri Mar 16 14:57:33 2018 +0200
+                
+                    nyt tehty oikein
+                    
+                     eka.txt    | 4 +++-
+                      kolmas.txt | 5 ++++-
+                       2 files changed, 7 insertions(+), 2 deletions(-)
+                       
+                       commit 8c25932cba81bb144068973c9c3d9f379d625124
+                       Author: Antti Lammi <antti.lammi.23@gmail.com>
+                       Date:   Fri Mar 16 14:56:08 2018 +0200
+                       
+                           kolmas.txt uudelleennimetty ja sisältöä muutettu, eka.txt sisältöä muutettu
+                           
+                            eka.txt     | 29 +++++------------------------
+                             kolmas.txt  |  1 +
+                              kolmast.txt |  1 -
+                               3 files changed, 6 insertions(+), 25 deletions(-)
+                               
+                               commit be54453a78d536c66183188b4d396930cbe25a50
+                               Author: Antti Lammi <antti.lammi.23@gmail.com>
+                               Date:   Fri Mar 16 14:52:43 2018 +0200
+                               
+                                   uudelleennimetty tiedosto.txt -> eka.txt
+                                   
+                                    eka.txt      | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+                                     tiedosto.txt | 51 ---------------------------------------------------
+                                      2 files changed, 51 insertions(+), 51 deletions(-)
+                                      
+                                      commit 57918668f046ea98ea4207d46ded01c2222f0c31
+                                      Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                      Date:   Fri Mar 16 14:52:09 2018 +0200
+                                      
+                                          toinen.txt poistettu
+                                          
+                                           toinen.txt | 1 -
+                                            1 file changed, 1 deletion(-)
+                                            
+                                            commit b5c326e8adbc83222b8521beaac2c95aec150fde
+                                            Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                            Date:   Fri Mar 16 14:49:16 2018 +0200
+                                            
+                                                poistettu vähän tekstiä, lisätty lisää
+                                                
+                                                 tiedosto.txt | 32 +++++++++++++++++++++++++++++++-
+                                                  1 file changed, 31 insertions(+), 1 deletion(-)
+                                                  
+                                                  commit 6606218dc1ba0660539428d657d519916a07c589
+                                                  Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                                  Date:   Fri Mar 16 14:48:00 2018 +0200
+                                                  
+                                                      lisätty tiedosto.txt tekstiä
+                                                      
+                                                       tiedosto.txt | 22 +++++++++++++++++++++-
+                                                        1 file changed, 21 insertions(+), 1 deletion(-)
+                                                        
+                                                        commit b5ea38786952a4ed5b2c0814ae27b8a272e76021
+                                                        Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                                        Date:   Fri Mar 16 14:45:17 2018 +0200
+                                                        
+                                                            lisätty stuff, muokattu toinen, kolmast
+                                                            
+                                                             kolmast.txt         | 1 +
+                                                              stuff/jokintiedosto | 0
+                                                               toinen.txt          | 1 +
+                                                                3 files changed, 2 insertions(+)
+                                                                
+                                                                commit e7b025a5e2fb1491a6c9cad683e31bac08af2b80
+                                                                Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                                                Date:   Fri Mar 16 14:43:47 2018 +0200
+                                                                
+                                                                    kolmas lisätty
+                                                                    
+                                                                     kolmast.txt | 0
+                                                                      1 file changed, 0 insertions(+), 0 deletions(-)
+                                                                      
+                                                                      commit 6625b78061dca98a7718ccfb098222d69a353767
+                                                                      Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                                                      Date:   Fri Mar 16 14:41:46 2018 +0200
+                                                                      
+                                                                          muutos ja lisäys
+                                                                          
+                                                                           tiedosto.txt | 1 +
+                                                                            toinen.txt   | 0
+                                                                             2 files changed, 1 insertion(+)
+                                                                             
+                                                                             commit 4cafc830f8574566afd5ddda477bc0d5828b043a
+                                                                             Author: Antti Lammi <antti.lammi.23@gmail.com>
+                                                                             Date:   Fri Mar 16 14:40:30 2018 +0200
+                                                                             
+                                                                                 tiedosto.txt luotu
+                                                                                 
+                                                                                  tiedosto.txt | 0
+                                                                                  

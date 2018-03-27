@@ -24,7 +24,7 @@ Perusversion jälkeen jatketaan kehitystä ajan salliessa seuraaviin ominaisuuks
 
 - Mahdollisuus laskea paras mahdollinen aloituspakka Last Hero Standing - formaatissa.
 - Normaalikäyttäjille käyttäjätunnuksen luomisen ja sisäänkirjautumisen mahdollisuus
-    -Tämä tarjoaa mahdollisuuden säilyttää tietoa omista pakoistaan henkilökohtaisilla käyttäjäsivuilla, mikä nopeuttaa           sovelluksen käyttöä turnauksessa.    
+  -Tämä tarjoaa mahdollisuuden säilyttää tietoa omista pakoistaan henkilökohtaisilla käyttäjäsivuilla, mikä nopeuttaa           sovelluksen käyttöä turnauksessa.
 - Adminkäyttäjille sisäänkirjautumismahdollisuus ja tietokannan muokkaaminen sovellussivulta suoraan
 - Mahdollisuus simuloida kokonainen turnaus ja selvittää tätä kautta erilaisten pakkavalintojen menestysmahdollisuudet
 - Mahdollisuus hyödyntää olemassaolevia tietokantoja automaattisesti pakkojen voittomahdollisuuksien hienosäätöön

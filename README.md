@@ -13,6 +13,6 @@
 
 ## Harjoitustyö
 ### Dokumentaatio
-[vaativuusmäärittely](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/vaativuusm%C3%A4%C3%A4rittely.md)
+[vaativuusmäärittely](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/vaativuusm%C3%A4%C3%A4rittely.md)    
 [työaikakirjanpito]()
 

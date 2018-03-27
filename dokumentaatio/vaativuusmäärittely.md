@@ -23,7 +23,7 @@ Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi käyttä
 Perusversion jälkeen jatketaan kehitystä ajan salliessa seuraaviin ominaisuuksiin. Lista on jotakuinkin järjestyksessä ensimmäisenä lisättävästä viimeisenä lisättävään.
 
 - Mahdollisuus laskea paras mahdollinen aloituspakka Last Hero Standing - formaatissa.
-- Normaalikäyttäjille käyttäjätunnuksen luomisen ja sisäänkirjautumisen mahdollisuus 
+- Normaalikäyttäjille käyttäjätunnuksen luomisen ja sisäänkirjautumisen mahdollisuus (ja täten kolmas käyttäjätyyppi)
   - Tämä tarjoaa mahdollisuuden säilyttää tietoa omista pakoistaan henkilökohtaisilla käyttäjäsivuilla, mikä nopeuttaa           sovelluksen käyttöä turnauksessa.
 - Adminkäyttäjille sisäänkirjautumismahdollisuus ja tietokannan muokkaaminen sovellussivulta suoraan
 - Mahdollisuus simuloida kokonainen turnaus ja selvittää tätä kautta erilaisten pakkavalintojen menestysmahdollisuudet

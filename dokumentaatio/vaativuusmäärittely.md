@@ -6,7 +6,7 @@ Sovellus on apuväline Hearthstone-pelissä kilpaileville, joka laskee molempien
 
 ## Käyttäjät
 
-Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi syöttää itse molempien pelaajien pakat ja niiden väliset winratet ja saa vastauksena optimaalisen bännin. Myöhemmin on tarkoitus laajentaa sovellusta hyödyntämään tietokantaa, josta saa pakkojen väliset winratet valmiiksi. Tällöin lisätään erillinen käyttäjätyyppi _(admin)_, joka kykenee hallinnoimaan kyseistä tietokantaa.
+Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi syöttää itse molempien pelaajien pakat ja niiden väliset winratet ja saa vastauksena optimaalisen bännin. Tämä ei vaadi kirjautumista, mutta myöhemmin saatetaan lisätä ominaisuuksia, jotka antavat siihen mahdollisuuden. Lisäksi on erillinen käyttäjätyyppi _(admin)_, joka kykenee hallinnoimaan pakkojen tiedot sisältävää tietokantaa.
 
 ## Perusversion tarjoama toiminnallisuus
 

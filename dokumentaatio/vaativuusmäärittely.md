@@ -1,6 +1,6 @@
 # Vaativuusmäärittely
 
-## Sovelluksen tarkoitusa
+## Sovelluksen tarkoitus
 
 Sovellus on apuväline Hearthstone pelissä kilpaileville, joka laskee molempien pelaajien pakkatyyppien perusteella optimaalisen ban-strategian. 
 

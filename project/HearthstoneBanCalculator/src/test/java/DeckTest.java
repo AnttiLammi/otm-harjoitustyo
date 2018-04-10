@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import hsbancalculator.Deck;
 import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;

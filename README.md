@@ -2,7 +2,7 @@
 Ohjelmistotekniikan menetelmät kurssia varten suoritettava sovellus, jonka avulla lasketaan parhaita bännistrategioita Hearthstone-keräilykorttipeliä kilpaa pelatessa. 
 
 ## Dokumentaatio
-[käyttöohje](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/Käyttöohje.md)    
+[käyttöohje](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)    
 [vaativuusmäärittely](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/vaativuusm%C3%A4%C3%A4rittely.md)    
 [työaikakirjanpito](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 

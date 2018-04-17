@@ -5,7 +5,7 @@ Ohjelmistotekniikan menetelmät kurssia varten suoritettava sovellus, jonka avul
 [Kilpailuformaatit selitettynä](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/formaatit.md)   
 [Käyttöohje](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)    
 [Vaativuusmäärittely](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/vaativuusm%C3%A4%C3%A4rittely.md)    
-[Arkkitehtuuri](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+[Arkkitehtuuri](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)    
 [Työaikakirjanpito](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Komentorivitoiminnot

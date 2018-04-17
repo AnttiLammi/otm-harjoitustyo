@@ -5,9 +5,12 @@ package hsbancalculator;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import hsbancalculator.sovelluslogiikka.Player;
+import hsbancalculator.sovelluslogiikka.Deck;
+import hsbancalculator.sovelluslogiikka.Calculator;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import hsbancalculator.sovelluslogiikka.*;
 /**
  *
  * @author antlammi

@@ -1,4 +1,4 @@
-package hsbancalculator;
+package hsbancalculator.sovelluslogiikka;
 
 import java.util.ArrayList;
 import java.util.HashMap;

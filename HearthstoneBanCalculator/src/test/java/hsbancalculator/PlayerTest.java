@@ -54,9 +54,9 @@ public class PlayerTest {
         Deck deck4 = new Deck("test4");
         Random rng = new Random();
         Double winrate = 0.05;
-        Player instance = new Player(deck1, deck2, deck3, deck4);
+        Player p = new Player(deck1, deck2, deck3, deck4);
 
-        instance.setWinrate(deck1, deck2, winrate);
+        p.setWinrate(deck1, deck2, winrate);
         Double asetus = deck1.getWinrate(deck2);
 
         assertEquals((Double) 0.05, asetus);
@@ -71,17 +71,17 @@ public class PlayerTest {
         System.out.println("getWinrate");
         Deck deck1 = new Deck("test1");
         Deck deck2 = new Deck("test2");
-        Player instance = new Player(deck1, deck2, new Deck("test3"), new Deck("test4"));
+        Player p = new Player(deck1, deck2, new Deck("test3"), new Deck("test4"));
         Random rng = new Random();
         Double wr = rng.nextDouble();
         deck1.setWinrate(deck2, wr);
-        
-        Double result = instance.getWinrate(deck1, deck2);
+
+        Double result = p.getWinrate(deck1, deck2);
         assertEquals(wr, result);
-        
+
         Double expectedResult = -100.0;
-        Double result2 = instance.getWinrate(deck1, new Deck("not found"));
-        
+        Double result2 = p.getWinrate(deck1, new Deck("not found"));
+
         assertEquals(expectedResult, result2);
     }
 

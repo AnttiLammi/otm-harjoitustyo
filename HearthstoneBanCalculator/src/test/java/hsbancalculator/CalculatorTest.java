@@ -82,16 +82,16 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testSimuloiConquest() {
+    public void conquestSimulaatioTest() {
        
         Player pelaaja1 = this.calculator.pelaaja1;
         Deck p1bannedclass = this.calculator.pelaaja1.lineup.get(0);
         Player pelaaja2 = this.calculator.pelaaja2;
         Deck p2bannedclass = this.calculator.pelaaja2.lineup.get(0);
-        Calculator instance = this.calculator;
+        Calculator calc = this.calculator;
         Player expResult = this.calculator.pelaaja1;
         Player expResult2 = this.calculator.pelaaja2;
-        Player result = instance.simuloiConquest(pelaaja1, p1bannedclass, pelaaja2, p2bannedclass);
+        Player result = calc.simuloiConquest(pelaaja1, p1bannedclass, pelaaja2, p2bannedclass);
         if (result == expResult) {
             assertEquals(expResult, result);
         } else if (result == expResult2) {
@@ -106,16 +106,16 @@ public class CalculatorTest {
      * Test of simuloiLHS method, of class Calculator.
      */
     @Test
-    public void testSimuloiLHS() {
+    public void lhsSimulaatioTest() {
         
         Player pelaaja1 = this.calculator.pelaaja1;
         Deck p1bannedclass = this.calculator.pelaaja1.lineup.get(0);
         Player pelaaja2 = this.calculator.pelaaja2;
         Deck p2bannedclass = this.calculator.pelaaja2.lineup.get(0);
-        Calculator instance = this.calculator;
+        Calculator calc = this.calculator;
         Player expResult = this.calculator.pelaaja1;
         Player expResult2 = this.calculator.pelaaja2;
-        Player result = instance.simuloiLHS(pelaaja1, p1bannedclass, pelaaja2, p2bannedclass);
+        Player result = calc.simuloiLHS(pelaaja1, p1bannedclass, pelaaja2, p2bannedclass);
         if (result == expResult) {
             assertEquals(expResult, result);
         } else if (result == expResult2) {

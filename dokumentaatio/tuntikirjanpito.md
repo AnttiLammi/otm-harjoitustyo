@@ -8,3 +8,4 @@
 |10.4.  |1     |Maven kuviot, testien runko|
 |15.4.  |2     |Aloitin sovelluksen Calculator luokkaa|
 |16.4.  |3     |Conquest ottelun  simuloiminen sekä bannin tietäen, että ilman. Vielä hiottavaa. |
+|16.4.  |2     |LHS ottelun simuloiminen. |

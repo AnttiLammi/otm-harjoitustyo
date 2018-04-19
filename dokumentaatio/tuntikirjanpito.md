@@ -10,3 +10,4 @@
 |16.4.  |3     |Conquest ottelun  simuloiminen sekä bannin tietäen, että ilman. Vielä hiottavaa. |
 |16.4.  |2     |LHS ottelun simuloiminen. |
 |17.4.  |4     |Vastustajan bannin rajaaminen tiettyihin vaihtoehtoihin, viikkotavoitteiden mukaiset testit ym|
+|18.4.  |2     |Tietokannan luominen ja dao luokkien aloitus|

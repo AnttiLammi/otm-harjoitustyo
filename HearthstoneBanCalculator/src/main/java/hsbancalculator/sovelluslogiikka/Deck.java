@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author antlammi
  */
 public class Deck {
-
+    public Integer id;
     public String name;
     private HashMap<Deck, Double> winrate;
 
@@ -20,7 +20,11 @@ public class Deck {
         this.name = name;
         this.winrate = new HashMap<>();
     }
-
+    public Deck(Integer id, String name){
+        this.id = id;
+        this.name = name;
+        this.winrate = new HashMap<>();
+    }
     public Boolean setWinrate(Deck deck, Double winrate) {
         if (winrate > 0 && winrate <= 1) {
             this.winrate.put(deck, winrate);

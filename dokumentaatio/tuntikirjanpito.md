@@ -13,4 +13,5 @@
 |18.4.  |2     |Tietokannan luominen ja dao luokkien aloitus|
 |20.4. |1      |Graafiseen käyttöliittymän toteutuksen alustava suunnittelu|
 |22.4. |1      |Tiedon lisääminen tietokantaan ohjelman käytön yhteydessä|
-|-     |yht: 21 | - | 
+|23.4. |2      |Tietokannassa olevan tiedon käsittely sovelluslogiikassa, päivityksiä tekstikäyttöliittymään|
+|-     |yht: 23 | - | 

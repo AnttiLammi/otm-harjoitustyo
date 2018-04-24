@@ -14,6 +14,6 @@
 |20.4. |1      |Graafiseen käyttöliittymän toteutuksen alustava suunnittelu|
 |22.4. |1      |Tiedon lisääminen tietokantaan ohjelman käytön yhteydessä|
 |23.4. |2      |Tietokannassa olevan tiedon käsittely sovelluslogiikassa, päivityksiä tekstikäyttöliittymään|
-|24.4. |6      |Tietokannan toiminen jar tiedoston kanssa, testejä, pientä hiontaa siellä sun täällä|
+|24.4. |6      |Lisää tietokannan integrointia, sen toimiminen jar tiedoston kanssa, daotestejä|
 |24.4. |1      |Sekvenssidiagrammi kuvastaen koko ohjelman toimintaa, dokumentaation päivittäminen|
 |-     |yht: 30 | - | 

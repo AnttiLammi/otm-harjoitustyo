@@ -29,7 +29,7 @@ public class PlayerDao implements Dao<Player, Integer> {
     }
 
     @Override
-    public Player findOne(Integer key) throws SQLException {
+    public Player findOne(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("Select * From Player WHERE id = ?");
         stmt.setInt(1, key);
@@ -70,7 +70,7 @@ public class PlayerDao implements Dao<Player, Integer> {
     }
 
     @Override
-    public Player saveOrUpdate(Player player) throws SQLException {
+    public Player saveOrUpdate(Player player) throws SQLException, ClassNotFoundException {
         DeckDao dDao = new DeckDao(database);
         ArrayList<Deck> line = player.lineup;
         
@@ -95,7 +95,7 @@ public class PlayerDao implements Dao<Player, Integer> {
          return findOne(findByName(player.name));
      
     }
-   public Integer findByName(String name) throws SQLException {
+   public Integer findByName(String name) throws SQLException, ClassNotFoundException {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Player WHERE name = ?");
             stmt.setString(1, name);
@@ -117,7 +117,7 @@ public class PlayerDao implements Dao<Player, Integer> {
 
     }
     @Override
-    public void delete(Integer key) throws SQLException {
+    public void delete(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
         
         PreparedStatement stmt = conn.prepareStatement("DELETE From Player where id = ?");

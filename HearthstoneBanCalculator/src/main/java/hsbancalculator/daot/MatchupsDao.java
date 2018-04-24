@@ -20,7 +20,7 @@ public class MatchupsDao {
         this.database = database;
     }
 
-    public Double findOne(Integer key1, Integer key2) throws SQLException {
+    public Double findOne(Integer key1, Integer key2) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("Select * From Matchups WHERE deck1_id = ? AND deck2_id = ?");
         stmt.setInt(1, key1);
@@ -45,7 +45,7 @@ public class MatchupsDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Double saveOrUpdate(Integer key1, Integer key2, Double wr) throws SQLException {
+    public Double saveOrUpdate(Integer key1, Integer key2, Double wr) throws SQLException, ClassNotFoundException {
         Double d = findOne(key1, key2);
         if (d == null) {
             try (Connection conn = database.getConnection()) {

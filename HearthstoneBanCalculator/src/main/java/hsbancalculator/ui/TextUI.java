@@ -31,7 +31,7 @@ public class TextUI {
         while (true) {
 
             Scanner lukija = new Scanner(System.in);
-            Database db = new Database("jdbc:sqlite:src/main/resources/db/hsbc.db");
+            Database db = new Database("jdbc:sqlite:hsbc.db");
             DeckDao dDao = new DeckDao(db);
             MatchupsDao mDao = new MatchupsDao(db);
             PlayerDao pDao = new PlayerDao(db);

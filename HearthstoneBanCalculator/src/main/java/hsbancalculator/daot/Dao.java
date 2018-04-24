@@ -11,10 +11,12 @@ import java.util.List;
 /**
  *
  * @author antlammi
+ * @param <T>
+ * @param <K>
  */
 public interface Dao<T, K> {
-    T findOne(K key) throws SQLException;
-    List<T> findAll() throws SQLException;
-    T saveOrUpdate(T object) throws SQLException;
-    void delete(K key) throws SQLException;
+    T findOne(K key) throws SQLException, ClassNotFoundException;
+    List<T> findAll() throws SQLException, ClassNotFoundException;
+    T saveOrUpdate(T object) throws SQLException, ClassNotFoundException;
+    void delete(K key) throws SQLException, ClassNotFoundException;
 }

@@ -23,7 +23,7 @@ public class DeckDao implements Dao<Deck, Integer> {
     }
 
     @Override
-    public Deck findOne(Integer key) throws SQLException {
+    public Deck findOne(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("Select * From Deck WHERE id = ?");
         stmt.setInt(1, key);
@@ -45,7 +45,7 @@ public class DeckDao implements Dao<Deck, Integer> {
     }
 
     @Override
-     public List<Deck> findAll() throws SQLException {
+     public List<Deck> findAll() throws SQLException, ClassNotFoundException {
         List<Deck> decks = new ArrayList<>();
 
         try (Connection conn = database.getConnection();
@@ -61,7 +61,7 @@ public class DeckDao implements Dao<Deck, Integer> {
 
     
     @Override
-    public Deck saveOrUpdate(Deck paramDeck) throws SQLException {
+    public Deck saveOrUpdate(Deck paramDeck) throws SQLException, ClassNotFoundException {
         Deck d = findByName(paramDeck.name);
 
         if (d != null) {
@@ -76,7 +76,7 @@ public class DeckDao implements Dao<Deck, Integer> {
         
         return findByName(paramDeck.name);
     }
-    public Integer findIDByName(String name) throws SQLException{
+    public Integer findIDByName(String name) throws SQLException, ClassNotFoundException{
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Deck WHERE name = ?");
             stmt.setString(1, name);
@@ -97,7 +97,7 @@ public class DeckDao implements Dao<Deck, Integer> {
         }
 
     }
-    public Deck findByName(String name) throws SQLException {
+    public Deck findByName(String name) throws SQLException, ClassNotFoundException {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT id, name FROM Deck WHERE name = ?");
             stmt.setString(1, name);
@@ -120,7 +120,7 @@ public class DeckDao implements Dao<Deck, Integer> {
     }
 
     @Override
-    public void delete(Integer key) throws SQLException {
+    public void delete(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE From Deck WHERE id = ?");
 

@@ -125,5 +125,25 @@ public class CalculatorTest {
             fail("Kumpikaan pelaajista ei voittanut");
         }
     }
+    
+    public void lhsSimulaatioTest2(){
+        Player p1 = this.calculator.pelaaja1;
+        Deck p1bannedclass = p1.lineup.get(0);
+        
+        Player p2 = this.calculator.pelaaja2;
+        Deck p2bannedclass = p2.lineup.get(0);
+        
+       
+            for (int j=0; j<p2.lineup.size(); j++){
+                p1.lineup.get(1).setWinrate(p2.lineup.get(j), 100.0);
+            }
+        Calculator calc = this.calculator;
+        Player expResult = p1;
+        
+        Player result = calc.simuloiLHS(p1, p1bannedclass, p2, p2bannedclass);
+        assertEquals(expResult, result);
+        fail("Odotettu pelaaja ei voittanut.");
+            
+    }
 
 }

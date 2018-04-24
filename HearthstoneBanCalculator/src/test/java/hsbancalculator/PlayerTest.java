@@ -81,8 +81,23 @@ public class PlayerTest {
 
         Double expectedResult = -100.0;
         Double result2 = p.getWinrate(deck1, new Deck("not found"));
-
-        assertEquals(expectedResult, result2);
+        
+        assertEquals(expectedResult, result2); 
     }
 
+    @Test
+    public void setName() {
+        Player p = new Player(new Deck("test1"), new Deck("test2"), new Deck("test3"), new Deck("test4"));
+        p.setName("Kufdon");
+
+        assertEquals("Kufdon", p.name);
+    }
+
+    @Test
+    public void setID() {
+        Player p = new Player(new Deck("test1"), new Deck("test2"), new Deck("test3"), new Deck("test4"));
+        p.setID(1);
+
+        assertEquals((int) 1, (int) p.id);
+    }
 }

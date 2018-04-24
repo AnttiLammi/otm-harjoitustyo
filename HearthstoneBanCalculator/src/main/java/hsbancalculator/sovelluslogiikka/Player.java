@@ -18,6 +18,7 @@ public class Player {
     public ArrayList<Deck> lineup;
     public Integer id;
     public String name;
+
     public Player(Deck deck1, Deck deck2, Deck deck3, Deck deck4) {
         lineup = new ArrayList<>();
 
@@ -35,12 +36,15 @@ public class Player {
             }
         }
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public void setID(Integer id){
+
+    public void setID(Integer id) {
         this.id = id;
     }
+
     public void printWR() {
         for (int i = 0; i < lineup.size(); i++) {
             Deck pakka = lineup.get(i);
@@ -65,8 +69,6 @@ public class Player {
                 return lineup.get(i).getWinrate(deck2);
             }
         }
-
-        System.out.println("Deck not found");
         return -100.0;
     }
 }

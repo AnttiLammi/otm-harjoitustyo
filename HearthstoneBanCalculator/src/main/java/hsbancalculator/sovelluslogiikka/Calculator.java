@@ -28,7 +28,7 @@ public class Calculator {
 
     }
 
-    public HashMap<Deck, Double> parasBanConquestKnownBan(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
+    public HashMap<Deck, Double> parasBanConquest(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
         ArrayList<Deck> p1 = new ArrayList<>();
         ArrayList<Deck> p2 = new ArrayList<>();
         Player toinenPelaaja;
@@ -179,7 +179,7 @@ public class Calculator {
         return simtulos;
     }
 
-    public HashMap<Deck, Double> parasBanLHSKnownBan(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
+    public HashMap<Deck, Double> parasBanLHS(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
         ArrayList<Deck> p1 = new ArrayList<>();
         ArrayList<Deck> p2 = new ArrayList<>();
         Player toinenPelaaja;

@@ -7,6 +7,7 @@ package hsbancalculator.daot;
 
 import hsbancalculator.sovelluslogiikka.Deck;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,8 +45,18 @@ public class DeckDao implements Dao<Deck, Integer> {
     }
 
     @Override
-    public List<Deck> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public List<Deck> findAll() throws SQLException {
+        List<Deck> decks = new ArrayList<>();
+
+        try (Connection conn = database.getConnection();
+            ResultSet result = conn.prepareStatement("SELECT id, name FROM Deck").executeQuery()) {
+
+            while (result.next()) {
+                decks.add(new Deck(result.getInt("id"), result.getString("name")));
+            }
+        }
+
+        return decks;
     }
 
     

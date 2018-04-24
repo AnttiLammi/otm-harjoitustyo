@@ -10,19 +10,19 @@ Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi käyttä
 
 ## Perusversion tarjoama toiminnallisuus
 
-### Ennen kirjautumista
-- Normaalikäyttäjä voi valita molemmille pelaajille pakat ja kilpailuformaatin, jolloin ohjelma simuloi ottelusarjan kulkua ja antaa käyttäjälle listan eri ban-strategioista ja niiden vaikutuksesta ottelun voittamisen todennäköisyyteen.
+
+- Käyttäjä voi valita molemmille pelaajille pakat ja kilpailuformaatin, jolloin ohjelma simuloi ottelusarjan kulkua ja antaa käyttäjälle listan eri ban-strategioista ja niiden vaikutuksesta ottelun voittamisen todennäköisyyteen.
   - Tiedot pakkojen välisistä voittoprosenteista säilytetään tietokannassa.
   - Sovellus tukee kahta yleisintä kilpailuformaattia: Conquestia ja Last Hero Standingiä.
   - Graafinen käyttöliittymä, jonka avulla voi valita pakat.
-
-### Kirjautumisen jälkeen
-- Admin-käyttäjä voi lisäksi muokata tietokantaa: Lisätä uusia pakkoja ja muokata niiden välisiä voittoprosentteja.
+- Käyttäjä voi lisäksi muokata tietokantaa käytön yhteydessä tai erikseen.
 
 ## Jatkokehitysideoita
 Perusversion jälkeen jatketaan kehitystä ajan salliessa seuraaviin ominaisuuksiin. Lista on jotakuinkin järjestyksessä ensimmäisenä lisättävästä viimeisenä lisättävään.
 
+
 - Mahdollisuus laskea paras mahdollinen aloituspakka Last Hero Standing - formaatissa.
+- Tietokannan hallinnoinnin muuttaminen erityisen käyttäjätyypin _adminin_ erityisoikeudeksi.
 - Normaalikäyttäjille käyttäjätunnuksen luomisen ja sisäänkirjautumisen mahdollisuus (ja täten kolmas käyttäjätyyppi)
   - Tämä tarjoaa mahdollisuuden säilyttää tietoa omista pakoistaan henkilökohtaisilla käyttäjäsivuilla, mikä nopeuttaa           sovelluksen käyttöä turnauksessa.
 - Adminkäyttäjille sisäänkirjautumismahdollisuus ja tietokannan muokkaaminen sovellussivulta suoraan

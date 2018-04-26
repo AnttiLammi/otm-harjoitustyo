@@ -7,3 +7,5 @@
 /project/HearthstoneBanCalculator/target/
 /project/HearthstoneBanCalculator/nbproject/
 /HearthstoneBanCalculator/nbproject/
+/HearthstoneBanCalculator/hsbc.db
+/HearthstoneBanCalculator/src/test/java/database/test.db

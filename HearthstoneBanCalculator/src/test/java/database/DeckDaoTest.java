@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static org.junit.Assert.*;
 
 /**
@@ -47,7 +49,7 @@ public class DeckDaoTest {
     }
 
     @After
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLException, ClassNotFoundException {
         Connection conn = db.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE From Deck where 1=1");
         stmt.executeUpdate();
@@ -59,7 +61,7 @@ public class DeckDaoTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
-    public void testFindAll() throws SQLException {
+    public void testFindAll() throws SQLException, ClassNotFoundException {
 
         List<Deck> list = dDao.findAll();
         assertTrue(list.size() >= 1);
@@ -67,7 +69,7 @@ public class DeckDaoTest {
     }
 
     @Test
-    public void testFindByName() throws SQLException {
+    public void testFindByName() throws SQLException, ClassNotFoundException {
         Deck test = dDao.findByName("Cube Warlock");
         assertTrue(test != null);
 
@@ -76,22 +78,26 @@ public class DeckDaoTest {
     @Test
     public void testFindByNameNull() throws SQLException {
 
-        assertTrue(dDao.findByName("Even Shaman") == null);
+        try {
+            assertTrue(dDao.findByName("Even Shaman") == null);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DeckDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Test
-    public void testFindIDByName() throws SQLException {
+    public void testFindIDByName() throws SQLException, ClassNotFoundException {
         Integer id = dDao.findIDByName("Cube Warlock");
         assertEquals((int) 1, (int) id);
 
     }
 
     @Test
-    public void testFindIDByNameNull() throws SQLException {
+    public void testFindIDByNameNull() throws SQLException, ClassNotFoundException {
         assertTrue(dDao.findIDByName("Even Shaman") == null);
     }
     @Test
-    public void testSaveAndDelete() throws SQLException {
+    public void testSaveAndDelete() throws SQLException, ClassNotFoundException {
         Deck test = new Deck("Even Paladin");
         List<Deck> testlist = dDao.findAll();
         Boolean found = false;
@@ -127,7 +133,7 @@ public class DeckDaoTest {
     }
 
     @Test
-    public void testSaveWhenNull() throws SQLException {
+    public void testSaveWhenNull() throws SQLException, ClassNotFoundException {
         Deck test = new Deck("Cube Warlock");
         assertTrue(dDao.saveOrUpdate(test) == null);
     }

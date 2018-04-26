@@ -55,7 +55,7 @@ public class MatchupsDaoTest {
     }
 
     @After
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLException,  ClassNotFoundException {
         Connection conn = db.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE From Deck where 1=1");
         stmt.executeUpdate();
@@ -73,7 +73,7 @@ public class MatchupsDaoTest {
     // @Test
     // public void hello() {}
     @Test
-    public void saveAndFindOneTest() throws SQLException {
+    public void saveAndFindOneTest() throws SQLException, ClassNotFoundException {
         Deck d1 = dDao.findOne(1);
         Deck d2 = dDao.findOne(2);
 
@@ -83,7 +83,7 @@ public class MatchupsDaoTest {
     }
 
     @Test
-    public void updateTest() throws SQLException {
+    public void updateTest() throws SQLException, ClassNotFoundException {
         Deck d1 = dDao.findOne(1);
         Deck d2 = dDao.findOne(2);
 
@@ -96,7 +96,7 @@ public class MatchupsDaoTest {
     }
     
     @Test
-    public void findOneNull() throws SQLException{
+    public void findOneNull() throws SQLException, ClassNotFoundException{
        assertTrue(mDao.findOne(1, 2) == null);
     }
    

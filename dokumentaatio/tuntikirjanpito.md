@@ -16,4 +16,5 @@
 |23.4. |2      |Tietokannassa olevan tiedon käsittely sovelluslogiikassa, päivityksiä tekstikäyttöliittymään|
 |24.4. |6      |Lisää tietokannan integrointia, sen toimiminen jar tiedoston kanssa, daotestejä|
 |24.4. |1      |Sekvenssidiagrammi kuvastaen koko ohjelman toimintaa, dokumentaation päivittäminen|
-|-     |yht: 30 | - | 
+|25.4. |1      |Graafisen käyttöliittymän kehitystä|
+|-     |yht: 31 | - | 

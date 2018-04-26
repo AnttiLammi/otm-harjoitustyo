@@ -18,4 +18,4 @@
 |24.4. |1      |Sekvenssidiagrammi kuvastaen koko ohjelman toimintaa, dokumentaation päivittäminen|
 |25.4. |1      |Graafisen käyttöliittymän kehitystä|
 |26.4. |2      |Graafisen käyttöliittymän kehitystä|
-|-     |yht: 31 | - | 
+|-     |yht: 33 | - | 

@@ -67,7 +67,7 @@ public class HearthstoneBanCalculator extends Application {
 
         JavaFXDecks jfxd = new JavaFXDecks(main, bp);
 
-        JavaFXPlayers jfxp = new JavaFXPlayers(main);
+        JavaFXPlayers jfxp = new JavaFXPlayers(main, bp);
         
         JavaFXSimulation jfxs = new JavaFXSimulation(main);
         
@@ -86,7 +86,11 @@ public class HearthstoneBanCalculator extends Application {
         });
         players.setOnAction((event) -> {
 
-            bp.setCenter(jfxp.getNakyma());
+            try {
+                bp.setCenter(jfxp.getNakyma());
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
 
         });
         simulation.setOnAction((event) -> {

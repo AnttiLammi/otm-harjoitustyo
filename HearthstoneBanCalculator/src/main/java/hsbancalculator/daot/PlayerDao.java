@@ -65,37 +65,61 @@ public class PlayerDao implements Dao<Player, Integer> {
     }
 
     @Override
-    public List<Player> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Player> findAll() throws SQLException, ClassNotFoundException {
+        List<Player> players = new ArrayList<>();
+
+        try (Connection conn = database.getConnection();
+            ResultSet result = conn.prepareStatement("SELECT * FROM Player").executeQuery()) {
+            DeckDao dDao = new DeckDao(database);
+            while (result.next()) {
+                Integer pID = result.getInt("id");
+                String pname = result.getString("name");
+                Deck d1 = dDao.findOne(result.getInt("deck1_id"));
+                Deck d2 = dDao.findOne(result.getInt("deck2_id"));
+                Deck d3 = dDao.findOne(result.getInt("deck3_id"));
+                Deck d4 = dDao.findOne(result.getInt("deck4_id"));
+
+                Player p = new Player(d1, d2, d3, d4);
+
+                p.setID(pID);
+                p.setName(pname);
+                players.add(p);
+
+            }
+        }
+
+        return players;
+
     }
 
     @Override
     public Player saveOrUpdate(Player player) throws SQLException, ClassNotFoundException {
         DeckDao dDao = new DeckDao(database);
         ArrayList<Deck> line = player.lineup;
-        
+
         ArrayList lineIDList = new ArrayList<>();
-        for (int i=0; i<line.size(); i++){
+        for (int i = 0; i < line.size(); i++) {
             dDao.saveOrUpdate(line.get(i));
             Integer id = dDao.findIDByName(line.get(i).name);
             lineIDList.add(id);
         }
-        
-         try (Connection conn = database.getConnection()){
+
+        try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("Insert into Player (name, deck1_id, deck2_id, deck3_id, deck4_id) Values(?, ?, ?, ?, ?)");
             stmt.setString(1, player.name);
-            stmt.setInt(2, (int)lineIDList.get(0));
-            stmt.setInt(3, (int)lineIDList.get(1));
-            stmt.setInt(4, (int)lineIDList.get(2));
-            stmt.setInt(5, (int)lineIDList.get(3));
-            
+            stmt.setInt(2, (int) lineIDList.get(0));
+            stmt.setInt(3, (int) lineIDList.get(1));
+            stmt.setInt(4, (int) lineIDList.get(2));
+            stmt.setInt(5, (int) lineIDList.get(3));
+
             stmt.executeUpdate();
         }
-         
-         return findOne(findByName(player.name));
-     
+
+        return findOne(findByName(player.name));
+
     }
-   public Integer findByName(String name) throws SQLException, ClassNotFoundException {
+
+    public Integer findByName(String name) throws SQLException, ClassNotFoundException {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Player WHERE name = ?");
             stmt.setString(1, name);
@@ -105,7 +129,7 @@ public class PlayerDao implements Dao<Player, Integer> {
                     return null;
                 }
 
-               Integer id = rs.getInt("id");
+                Integer id = rs.getInt("id");
 
                 stmt.close();
                 rs.close();
@@ -116,14 +140,14 @@ public class PlayerDao implements Dao<Player, Integer> {
         }
 
     }
+
     @Override
     public void delete(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
-        
+
         PreparedStatement stmt = conn.prepareStatement("DELETE From Player where id = ?");
-        stmt.setInt(0, key);
+        stmt.setInt(1, key);
         stmt.executeUpdate();
     }
 
 }
- 

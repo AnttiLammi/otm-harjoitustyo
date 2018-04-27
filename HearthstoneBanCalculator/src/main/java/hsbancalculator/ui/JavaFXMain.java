@@ -10,8 +10,6 @@ import hsbancalculator.daot.DeckDao;
 import hsbancalculator.sovelluslogiikka.Deck;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,6 +53,8 @@ public final class JavaFXMain {
         Label l2 = new Label("Vastustajan Pakat");
 
         Button omat = new Button("Lisää omat");
+        omat.setMinWidth(400);
+        omat.setMaxWidth(400);
         omat.setOnAction((event) -> {
             try {
                 line1.forEach(s-> System.out.println(s));
@@ -81,6 +81,8 @@ public final class JavaFXMain {
         });
 
         Button vastustajan = new Button("Lisää vastustajan");
+        vastustajan.setMinWidth(400);
+        vastustajan.setMaxWidth(400);
         vastustajan.setOnAction((event) -> {
             try {
                 line2.forEach(s-> System.out.println(s));

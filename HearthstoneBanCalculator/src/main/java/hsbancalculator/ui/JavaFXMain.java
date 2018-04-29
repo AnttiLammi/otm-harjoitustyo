@@ -72,7 +72,7 @@ public final class JavaFXMain {
         Label l1 = new Label("Omat Pakat");
         Label l2 = new Label("Vastustajan Pakat");
 
-        Button omat = new Button("Lisää omat");
+        Button omat = new Button("Lisää omat pakat");
         omat.setMinWidth(400);
         omat.setMaxWidth(400);
         omat.setOnAction((event) -> {
@@ -99,7 +99,7 @@ public final class JavaFXMain {
             }
         });
 
-        Button vastustajan = new Button("Lisää vastustajan");
+        Button vastustajan = new Button("Lisää vastustajan pakat");
         vastustajan.setMinWidth(400);
         vastustajan.setMaxWidth(400);
         vastustajan.setOnAction((event) -> {

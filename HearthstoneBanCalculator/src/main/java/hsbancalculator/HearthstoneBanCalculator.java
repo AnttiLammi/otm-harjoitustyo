@@ -69,7 +69,7 @@ public class HearthstoneBanCalculator extends Application {
 
         JavaFXPlayers jfxp = new JavaFXPlayers(main, bp);
         
-        JavaFXSimulation jfxs = new JavaFXSimulation(main);
+        JavaFXSimulation jfxs = new JavaFXSimulation(main, bp);
         
         bp.setCenter(jfxm.getNakyma());
         mainview.setOnAction((event) -> {
@@ -90,11 +90,19 @@ public class HearthstoneBanCalculator extends Application {
                 bp.setCenter(jfxp.getNakyma());
             } catch (SQLException ex) {
                 System.out.println(ex);
+            } catch (ClassNotFoundException ex) {
+                System.out.println(ex);
             }
 
         });
         simulation.setOnAction((event) -> {
-            bp.setCenter(jfxs.getNakyma());
+            try {
+                bp.setCenter(jfxs.getNakyma());
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } catch (ClassNotFoundException ex) {
+                System.out.println(ex);
+            }
         });
         Scene scene = new Scene(bp);
         main.setScene(scene);

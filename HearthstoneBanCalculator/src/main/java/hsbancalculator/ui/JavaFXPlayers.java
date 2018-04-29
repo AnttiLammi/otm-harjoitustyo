@@ -27,21 +27,23 @@ import javafx.stage.Stage;
  * @author antlammi
  */
 public class JavaFXPlayers {
+
     private DeckDao dDao;
     private PlayerDao pDao;
     private ArrayList<Deck> lineup;
     private Database db;
     private BorderPane bp;
     public Stage main;
-    public JavaFXPlayers(Stage main, BorderPane bp) throws ClassNotFoundException, SQLException{
+
+    public JavaFXPlayers(Stage main, BorderPane bp) throws ClassNotFoundException, SQLException {
         this.main = main;
         db = new Database("jdbc:sqlite:hsbc.db");
         dDao = new DeckDao(db);
         pDao = new PlayerDao(db);
         this.bp = bp;
     }
-    
-    public Parent getNakyma() throws SQLException, ClassNotFoundException{
+
+    public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
         VBox vb2 = new VBox();
@@ -52,18 +54,18 @@ public class JavaFXPlayers {
             Button nb2 = new Button("Delete");
             nb1.setMinWidth(200.0);
             nb1.setMaxWidth(200.0);
-           /* nb1.setOnAction((event) -> {
+            nb1.setOnAction((event) -> {
                 try {
-                    JavaFXMatchups jfxmu = new JavaFXMatchups(this.main, bp, dDao.findOne(dDao.findIDByName(nb1.getText())));
-                    bp.setCenter(jfxmu.getNakyma());
+                    JavaFXPlayerDecks jfxpd = new JavaFXPlayerDecks(this.main, this.bp, pDao.findOne(pDao.findByName(nb1.getText())));
+                    bp.setCenter(jfxpd.getNakyma());
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 } catch (ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
 
-            });*/
-            
+            });
+
             nb2.setMinWidth(100.0);
             nb2.setMaxWidth(100.0);
             nb2.setOnAction((event) -> {

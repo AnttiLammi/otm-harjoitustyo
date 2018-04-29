@@ -18,4 +18,6 @@
 |24.4. |1      |Sekvenssidiagrammi kuvastaen koko ohjelman toimintaa, dokumentaation päivittäminen|
 |25.4. |1      |Graafisen käyttöliittymän kehitystä|
 |26.4. |2      |Graafisen käyttöliittymän kehitystä|
-|-     |yht: 33 | - | 
+|27.4. |1      |Pelaajanäkymä käyttöliittymään, yleistä kehitystä|
+|29.4. |3      |Graafisen käyttöliittymän avulla pelaajien tietojen muuttaminen, simulaationäkymän aloitus|
+|-     |yht: 37 | - | 

@@ -21,7 +21,8 @@ mvn jacoco:report
 ```
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
-
+### Releaset
+[Viikko 5](https://github.com/AnttiLammi/otm-harjoitustyo/releases/tag/viikko5)   
 ### Suoritettavan jarin generointi
 
 Komento

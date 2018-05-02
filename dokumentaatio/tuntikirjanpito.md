@@ -20,4 +20,5 @@
 |26.4. |2      |Graafisen käyttöliittymän kehitystä|
 |27.4. |1      |Pelaajanäkymä käyttöliittymään, yleistä kehitystä|
 |29.4. |3      |Graafisen käyttöliittymän avulla pelaajien tietojen muuttaminen, simulaationäkymän aloitus|
-|-     |yht: 37 | - | 
+|2.5. |3       |Koko toiminnallisuus graafisessa käyttöliittymässä|
+|-     |yht: 40 | - | 

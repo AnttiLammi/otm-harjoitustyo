@@ -51,10 +51,6 @@ public class MatchupsDao {
         return d;
     }
 
-    public List<Double> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      * Tallentaa liukuluvun matchups tauluun tai mikäli kyseinen matchup löytyy
      * jo, tallentaa arvon tilalle.
@@ -92,14 +88,6 @@ public class MatchupsDao {
             }
         }
 
-    }
-    /**
-     * Toteutetaan DeckDao-luokan delete metodin yhteydessä, ei erikseen tarpeen.
-     * @param key
-     * @throws SQLException 
-     */
-    public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

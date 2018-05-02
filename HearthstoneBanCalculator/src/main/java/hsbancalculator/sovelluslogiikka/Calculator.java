@@ -34,7 +34,12 @@ public class Calculator {
         this.rng = new Random();
 
     }
-
+    public void setRandom(Random random){
+        this.rng = random;
+    }
+    public Random getRandom(){
+        return this.rng;
+    }
     /**
      * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
      * Conquest-formaatissa, kun vastustajan ban on rajattu tiettyihin

@@ -61,6 +61,12 @@ public class DeckDaoTest {
     // The methods must be annotated with annotation @Test. For example:
     //
     @Test
+    public void testFindOneNull() throws SQLException, ClassNotFoundException {
+        dDao.delete(1);
+        assertEquals(dDao.findOne(1), null);
+    }
+
+    @Test
     public void testFindAll() throws SQLException, ClassNotFoundException {
 
         List<Deck> list = dDao.findAll();
@@ -96,6 +102,7 @@ public class DeckDaoTest {
     public void testFindIDByNameNull() throws SQLException, ClassNotFoundException {
         assertTrue(dDao.findIDByName("Even Shaman") == null);
     }
+
     @Test
     public void testSaveAndDelete() throws SQLException, ClassNotFoundException {
         Deck test = new Deck("Even Paladin");

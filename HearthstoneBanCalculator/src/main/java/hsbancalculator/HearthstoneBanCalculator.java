@@ -7,6 +7,10 @@ package hsbancalculator;
  */
 import hsbancalculator.ui.*;
 
+import hsbancalculator.ui.JavaFXDecks;
+import hsbancalculator.ui.JavaFXMain;
+import hsbancalculator.ui.JavaFXPlayers;
+import hsbancalculator.ui.JavaFXSimulation;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

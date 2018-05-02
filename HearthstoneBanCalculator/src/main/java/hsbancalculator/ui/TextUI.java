@@ -194,14 +194,14 @@ public class TextUI {
 
             System.out.println("Omat pakat: ");
             System.out.println("");
-            player1.printWR();
+          //  player1.printWR();
 
             System.out.println("");
             System.out.println("------------------------------------------");
             System.out.println("");
             System.out.println("Vastustajan pakat: ");
             System.out.println("");
-            player2.printWR();
+         //   player2.printWR();
             lukija.reset();
             Boolean conquest = false;
             System.out.println("");

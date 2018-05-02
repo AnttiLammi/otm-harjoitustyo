@@ -36,7 +36,7 @@ public class Player {
     public void setWinrate(Deck deck1, Deck deck2, Double winrate) {
         for (int i = 0; i < lineup.size(); i++) {
             if (lineup.get(i).name.equals(deck1.name)) {
-                lineup.get(i).setWinrate(deck2, winrate);
+                lineup.get(i).setWinrate(deck2, winrate);   
             }
         }
     }
@@ -48,26 +48,7 @@ public class Player {
     public void setID(Integer id) {
         this.id = id;
     }
-    /**
-     * Tulostaa pelaaja-olioon talletettujen pakkojen kaikki matchupit.
-     */
-    public void printWR() {
-        for (int i = 0; i < lineup.size(); i++) {
-            Deck pakka = lineup.get(i);
-            HashMap<Deck, Double> matchupit = pakka.getAllWR();
-            ArrayList<Deck> keyset = new ArrayList<>();
-            matchupit.keySet().forEach(s -> keyset.add(s));
-
-            for (int j = 0; j < keyset.size(); j++) {
-                Deck vastassa = keyset.get(j);
-                System.out.println(pakka.name + " vastaan " + vastassa + ": " + matchupit.get(vastassa));
-            }
-
-            System.out.println("");
-            System.out.println("------");
-            System.out.println("");
-        }
-    }
+   
     /**
      * Palauttaa pakan winraten toista vastaan tai -100 jos matchuppia ei löydy.
      * @param deck1

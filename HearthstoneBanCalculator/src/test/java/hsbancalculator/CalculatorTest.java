@@ -10,6 +10,7 @@ import hsbancalculator.sovelluslogiikka.Deck;
 import hsbancalculator.sovelluslogiikka.Calculator;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -83,7 +84,7 @@ public class CalculatorTest {
 
     @Test
     public void conquestSimulaatioTest() {
-       
+
         Player pelaaja1 = this.calculator.pelaaja1;
         Deck p1bannedclass = this.calculator.pelaaja1.lineup.get(0);
         Player pelaaja2 = this.calculator.pelaaja2;
@@ -107,7 +108,7 @@ public class CalculatorTest {
      */
     @Test
     public void lhsSimulaatioTest() {
-        
+
         Player pelaaja1 = this.calculator.pelaaja1;
         Deck p1bannedclass = this.calculator.pelaaja1.lineup.get(0);
         Player pelaaja2 = this.calculator.pelaaja2;
@@ -120,30 +121,79 @@ public class CalculatorTest {
             assertEquals(expResult, result);
         } else if (result == expResult2) {
             assertEquals(expResult2, result);
-        } else {
-
-            fail("Kumpikaan pelaajista ei voittanut");
         }
     }
-    
-    public void lhsSimulaatioTest2(){
+
+    @Test
+    public void lhsSimulaatioTest2() {
         Player p1 = this.calculator.pelaaja1;
         Deck p1bannedclass = p1.lineup.get(0);
-        
+
         Player p2 = this.calculator.pelaaja2;
         Deck p2bannedclass = p2.lineup.get(0);
-        
-       
-            for (int j=0; j<p2.lineup.size(); j++){
-                p1.lineup.get(1).setWinrate(p2.lineup.get(j), 100.0);
-            }
+
+        for (int j = 0; j < p2.lineup.size(); j++) {
+            p1.lineup.get(1).setWinrate(p2.lineup.get(j), 100.0);
+        }
         Calculator calc = this.calculator;
         Player expResult = p1;
-        
+
         Player result = calc.simuloiLHS(p1, p1bannedclass, p2, p2bannedclass);
-        assertEquals(expResult, result);
-        fail("Odotettu pelaaja ei voittanut.");
-            
+        assertEquals(expResult.name, result.name);
+
     }
 
+    @Test
+    public void parasBanLHSTest() {
+
+        Player p1 = this.calculator.pelaaja1;
+        Player p2 = this.calculator.pelaaja2;
+        for (int i = 0; i < p1.lineup.size(); i++) {
+            p1.setWinrate(p1.lineup.get(i), p2.lineup.get(0), 0.40);
+            p2.setWinrate(p2.lineup.get(0), p1.lineup.get(i), 0.60);
+            for (int j = 1; j < p2.lineup.size(); j++) {
+                p1.setWinrate(p1.lineup.get(i), p2.lineup.get(j), 0.50);
+                p2.setWinrate(p2.lineup.get(j), p1.lineup.get(i), 0.50);
+            }
+        }
+
+        Random random = new Random();
+        random.setSeed(1);
+        calculator.setRandom(random);
+
+        HashMap<Deck, Double> dd = calculator.parasBanLHS(p2);
+        Double max = dd.get(p2.lineup.get(0));
+        for (int i = 1; i < 4; i++) {
+            if (dd.get(p2.lineup.get(i)) > max) {
+                fail("paras ban ei ollut odotettu");
+            }
+        }
+    }
+
+    @Test
+    public void parasBanConquestTest() {
+
+        Player p1 = this.calculator.pelaaja1;
+        Player p2 = this.calculator.pelaaja2;
+        for (int i = 0; i < p1.lineup.size(); i++) {
+            p1.setWinrate(p1.lineup.get(i), p2.lineup.get(0), 0.40);
+            p2.setWinrate(p2.lineup.get(0), p1.lineup.get(i), 0.60);
+            for (int j = 1; j < p2.lineup.size(); j++) {
+                p1.setWinrate(p1.lineup.get(i), p2.lineup.get(j), 0.50);
+                p2.setWinrate(p2.lineup.get(j), p1.lineup.get(i), 0.50);
+            }
+        }
+
+        Random random = new Random();
+        random.setSeed(1);
+        calculator.setRandom(random);
+
+        HashMap<Deck, Double> dd = calculator.parasBanConquest(p2);
+        Double max = dd.get(p2.lineup.get(0));
+        for (int i = 1; i < 4; i++) {
+            if (dd.get(p2.lineup.get(i)) > max) {
+                fail("paras ban ei ollut odotettu");
+            }
+        }
+    }
 }

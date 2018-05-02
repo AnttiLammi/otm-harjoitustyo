@@ -28,7 +28,7 @@ Alla oleva kaavio kuvastaa karkeasti sitä, miten sovelluslogiikan osaset liitty
 ## Tiedon talletus
 Ohjelman hyödyntämät tiedot tallennetaan SQL muotoiseen tietokantaan. Ohjelmaa käynnistettäessä ensimmäistä kertaa Database luokka luo uuden tietokannan hsbc.db ohjelmakansioon, jota se voi jatkossa hyödyntää.
 
-Tämän lisäksi *hsbancalculator.daot* luokasta löytyvät luokat:
+Tämän lisäksi *hsbancalculator.daot* pakkauksesta löytyvät luokat:
 - DeckDao
 - PlayerDao
 - MatchupsDao  

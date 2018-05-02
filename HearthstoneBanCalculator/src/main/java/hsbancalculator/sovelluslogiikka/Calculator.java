@@ -20,6 +20,12 @@ public class Calculator {
 
     private Random rng;
 
+    /**
+     * Konstruktori, joka pohjustaa rng muuttujan ja pelaajat 1 ja 2.
+     *
+     * @param pelaaja1
+     * @param pelaaja2
+     */
     public Calculator(Player pelaaja1, Player pelaaja2) {
         this.pelaaja1 = pelaaja1;
         this.pelaaja2 = pelaaja2;
@@ -28,6 +34,16 @@ public class Calculator {
 
     }
 
+    /**
+     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
+     * Conquest-formaatissa, kun vastustajan ban on rajattu tiettyihin
+     * vaihtoehtoihin.
+     *
+     *
+     * @param pelaaja
+     * @param banVaihtoehdot
+     * @return
+     */
     public HashMap<Deck, Double> parasBanConquest(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
         ArrayList<Deck> p1 = new ArrayList<>();
         ArrayList<Deck> p2 = new ArrayList<>();
@@ -45,7 +61,7 @@ public class Calculator {
         HashMap<Deck, Integer> simvoitot = new HashMap<>();
         HashMap<Deck, Integer> simapu = new HashMap<>();
 
-        Integer simkierrokset = 10000000;
+        Integer simkierrokset = 1000000;
         for (int i = 0; i <= simkierrokset; i++) {
             Deck p1ban = banVaihtoehdot.get(rng.nextInt(banVaihtoehdot.size()));
             Deck p2ban = p2.get(rng.nextInt(4));
@@ -66,17 +82,19 @@ public class Calculator {
         for (int i = 0; i < line.size(); i++) {
             Deck pakka = line.get(i);
             simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-            System.out.println("Kun vastustajalta oli bännitty: " + pakka + ", voitit " + simvoitot.get(pakka)
-                    + " /" + simapu.get(pakka) + " kertaa.");
 
-            System.out.println("Voittoprosentti oli siis: " + simtulos.get(pakka));
-            System.out.println("");
-            System.out.println("--------------");
-            System.out.println("");
         }
         return simtulos;
     }
 
+    /**
+     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
+     * Conquest-formaatissa, kun vastustajan ban on täysin satunnaisesti
+     * valittu.
+     *
+     * @param pelaaja
+     * @return
+     */
     public HashMap<Deck, Double> parasBanConquest(Player pelaaja) {
         ArrayList<Deck> p1;
         ArrayList<Deck> p2;
@@ -96,7 +114,7 @@ public class Calculator {
         HashMap<Deck, Integer> simvoitot = new HashMap<>();
         HashMap<Deck, Integer> simapu = new HashMap<>();
 
-        Integer simkierrokset = 10000000;
+        Integer simkierrokset = 1000000;
         for (int i = 0; i <= simkierrokset; i++) {
             Deck p1ban = p1.get(rng.nextInt(4));
             Deck p2ban = p2.get(rng.nextInt(4));
@@ -117,17 +135,18 @@ public class Calculator {
         for (int i = 0; i < line.size(); i++) {
             Deck pakka = line.get(i);
             simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-            System.out.println("Kun vastustajalta oli bännitty: " + pakka + ", voitit " + simvoitot.get(pakka)
-                    + " /" + simapu.get(pakka) + " kertaa.");
 
-            System.out.println("Voittoprosentti oli siis: " + simtulos.get(pakka));
-            System.out.println("");
-            System.out.println("--------------");
-            System.out.println("");
         }
         return simtulos;
     }
 
+    /**
+     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
+     * LHS-formaatissa, kun vastustajan ban on täysin satunnaisesti valittu.
+     *
+     * @param pelaaja
+     * @return
+     */
     public HashMap<Deck, Double> parasBanLHS(Player pelaaja) {
         ArrayList<Deck> p1;
         ArrayList<Deck> p2;
@@ -147,7 +166,7 @@ public class Calculator {
         HashMap<Deck, Integer> simvoitot = new HashMap<>();
         HashMap<Deck, Integer> simapu = new HashMap<>();
 
-        Integer simkierrokset = 10000000;
+        Integer simkierrokset = 1000000;
         for (int i = 0; i <= simkierrokset; i++) {
             Deck p1ban = p1.get(rng.nextInt(4));
             Deck p2ban = p2.get(rng.nextInt(4));
@@ -168,17 +187,20 @@ public class Calculator {
         for (int i = 0; i < line.size(); i++) {
             Deck pakka = line.get(i);
             simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-            System.out.println("Kun vastustajalta oli bännitty: " + pakka + ", voitit " + simvoitot.get(pakka)
-                    + " /" + simapu.get(pakka) + " kertaa.");
 
-            System.out.println("Voittoprosentti oli siis: " + simtulos.get(pakka));
-            System.out.println("");
-            System.out.println("--------------");
-            System.out.println("");
         }
         return simtulos;
     }
 
+    /**
+     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
+     * LHS-formaatissa, kun vastustajan ban on rajattu tiettyihin
+     * vaihtoehtoihin.
+     *
+     * @param pelaaja
+     * @param banVaihtoehdot
+     * @return
+     */
     public HashMap<Deck, Double> parasBanLHS(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
         ArrayList<Deck> p1 = new ArrayList<>();
         ArrayList<Deck> p2 = new ArrayList<>();
@@ -196,7 +218,7 @@ public class Calculator {
         HashMap<Deck, Integer> simvoitot = new HashMap<>();
         HashMap<Deck, Integer> simapu = new HashMap<>();
 
-        Integer simkierrokset = 10000000;
+        Integer simkierrokset = 1000000;
         for (int i = 0; i <= simkierrokset; i++) {
             Deck p1ban = banVaihtoehdot.get(rng.nextInt(banVaihtoehdot.size()));
             Deck p2ban = p2.get(rng.nextInt(4));
@@ -217,17 +239,20 @@ public class Calculator {
         for (int i = 0; i < line.size(); i++) {
             Deck pakka = line.get(i);
             simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-            System.out.println("Kun vastustajalta oli bännitty: " + pakka + ", voitit " + simvoitot.get(pakka)
-                    + " /" + simapu.get(pakka) + " kertaa.");
 
-            System.out.println("Voittoprosentti oli siis: " + simtulos.get(pakka));
-            System.out.println("");
-            System.out.println("--------------");
-            System.out.println("");
         }
         return simtulos;
     }
 
+    /**
+     * Simuloi yksittäisen Conquest ottelun, palauttaa voittaneen pelaajan.
+     *
+     * @param pelaaja1
+     * @param p1bannedclass
+     * @param pelaaja2
+     * @param p2bannedclass
+     * @return
+     */
     public Player simuloiConquest(Player pelaaja1, Deck p1bannedclass, Player pelaaja2, Deck p2bannedclass) {
         ArrayList<Deck> p1line = new ArrayList<>();
         for (int i = 0; i < pelaaja1.lineup.size(); i++) {
@@ -267,6 +292,15 @@ public class Calculator {
         }
     }
 
+    /**
+     * Simuloi yksittäisen LHS-ottelun, palauttaa voittaneen pelaajan.
+     *
+     * @param pelaaja1
+     * @param p1bannedclass
+     * @param pelaaja2
+     * @param p2bannedclass
+     * @return
+     */
     public Player simuloiLHS(Player pelaaja1, Deck p1bannedclass, Player pelaaja2, Deck p2bannedclass) {
         ArrayList<Deck> p1line = new ArrayList<>();
         for (int i = 0; i < pelaaja1.lineup.size(); i++) {

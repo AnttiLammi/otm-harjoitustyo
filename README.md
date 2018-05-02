@@ -7,7 +7,8 @@ Ohjelmistotekniikan menetelmät kurssia varten suoritettava sovellus, jonka avul
 [Vaativuusmäärittely](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/vaativuusm%C3%A4%C3%A4rittely.md)    
 [Arkkitehtuuri](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)    
 [Työaikakirjanpito](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
-
+## Releaset
+[Viikko 5](https://github.com/AnttiLammi/otm-harjoitustyo/releases/tag/viikko5)   
 ## Komentorivitoiminnot
 Testit suoritetaan komennolla   
 
@@ -21,8 +22,7 @@ mvn jacoco:report
 ```
 
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedosto _target/site/jacoco/index.html_
-### Releaset
-[Viikko 5](https://github.com/AnttiLammi/otm-harjoitustyo/releases/tag/viikko5)   
+
 ### Suoritettavan jarin generointi
 
 Komento
@@ -33,3 +33,16 @@ mvn package
 
 generoi hakemistoon _target_ suoritettavan jar-tiedoston _HearthstoneBanCalculator-1.0-SNAPSHOT.jar_
 
+### JavaDoc
+Komento
+```
+mvn javadoc:javadoc
+```
+Generoi JavaDocin jota voi tarkastella avaamalla selaimella tiedoston sijainnissa target/site/apidocs/index.html
+
+### CheckStyle
+CheckStyle-tiedoston määrittelemät tarkistukset voidaan tarkistaa 
+```
+ mvn jxr:jxr checkstyle:checkstyle 
+```
+Generoi polkuun target/site/checkstyle.html mahdolliset virheilmoitukset

@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.List;
 
 /**
+ * Matchups-taulun tietokantaoperaatiot.
  *
  * @author antlammi
  */
@@ -20,6 +21,15 @@ public class MatchupsDao {
         this.database = database;
     }
 
+    /**
+     * Hakee tietokantataulusta tietyn matchupin eri pakan id:tä hyödyntäen.
+     *
+     * @param key1
+     * @param key2
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Double findOne(Integer key1, Integer key2) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("Select * From Matchups WHERE deck1_id = ? AND deck2_id = ?");
@@ -45,6 +55,17 @@ public class MatchupsDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Tallentaa liukuluvun matchups tauluun tai mikäli kyseinen matchup löytyy
+     * jo, tallentaa arvon tilalle.
+     *
+     * @param key1
+     * @param key2
+     * @param wr
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Double saveOrUpdate(Integer key1, Integer key2, Double wr) throws SQLException, ClassNotFoundException {
         Double d = findOne(key1, key2);
         if (d == null) {
@@ -53,26 +74,30 @@ public class MatchupsDao {
                 stmt.setInt(1, key1);
                 stmt.setInt(2, key2);
                 stmt.setDouble(3, wr);
-                
+
                 stmt.executeUpdate();
-                
+
                 return findOne(key1, key2);
-            } 
+            }
         } else {
-            try (Connection conn = database.getConnection()){
+            try (Connection conn = database.getConnection()) {
                 PreparedStatement stmt = conn.prepareStatement("UPDATE Matchups SET winrate = ? WHERE deck1_id = ? AND deck2_id = ?");
                 stmt.setDouble(1, wr);
                 stmt.setInt(2, key1);
                 stmt.setInt(3, key2);
-                
+
                 stmt.executeUpdate();
-                
+
                 return findOne(key1, key2);
             }
         }
-        
-    }
 
+    }
+    /**
+     * Toteutetaan DeckDao-luokan delete metodin yhteydessä, ei erikseen tarpeen.
+     * @param key
+     * @throws SQLException 
+     */
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -11,18 +11,17 @@ import hsbancalculator.daot.MatchupsDao;
 import hsbancalculator.sovelluslogiikka.Deck;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
+ * Matchup-näkymä, tietylle pakalle listataan kaikki tietokannasta löytyvät
+ * matchupit ja niitä voi muokata.
  *
  * @author antlammi
  */
@@ -45,6 +44,14 @@ public class JavaFXMatchups {
         this.bp = bp;
     }
 
+    /**
+     * Palauttaa näkymän, jossa on lista tietokantataulusta löytyvistä pakoista
+     * ja tekstikenttä, jossa on tietyn pakan matchup niitä vastaan jos se
+     * löytyy, arvoa voi muuttaa.
+     * Muiden pakkojen nimistä pystyy navigoimaan niiden matchup-näkymiin.
+     * @return @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
         Button topLeftButton = new Button(deck.name + " vs");
@@ -85,16 +92,14 @@ public class JavaFXMatchups {
 
             b.setOnAction((event) -> {
                 JavaFXMatchups jfxmu;
-                
+
                 try {
                     jfxmu = new JavaFXMatchups(this.main, bp, dDao.findOne(dDao.findIDByName(b.getText())));
                     bp.setCenter(jfxmu.getNakyma());
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
-                
+
             });
             b2.setOnAction((event) -> {
                 Integer syote = Integer.parseInt(tf.getText());
@@ -110,9 +115,7 @@ public class JavaFXMatchups {
                         Double p2wrRounded = (double) Math.round(p2wr * 100) / 100;
                         mDao.saveOrUpdate(id, deck.id, p2wrRounded);
                     }
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
             });

@@ -12,8 +12,6 @@ import hsbancalculator.sovelluslogiikka.Deck;
 import hsbancalculator.sovelluslogiikka.Player;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
+ * Sovelluksen päänäkymä.
  *
  * @author antlammi
  */
@@ -45,6 +44,12 @@ public final class JavaFXMain {
         line2 = new ArrayList<>();
     }
 
+    /**
+     * Palauttaa näkymän, jossa voidaan lisätä kahdelle pelaajalle pakat
+     * tietokantaan, sekä tallettaa samalla nämä pelaajat.
+     *
+     * @return
+     */
     public Parent getNakyma() {
         GridPane gp = new GridPane();
 
@@ -140,17 +145,16 @@ public final class JavaFXMain {
 
         gp.add(omat, 0, 5);
         gp.add(vastustajan, 1, 5);
-        
-        
+
         TextField p1name = new TextField("Pelaajan 1 nimi");
         TextField p2name = new TextField("Pelaajan 2 nimi");
-        if (p1n != null){
+        if (p1n != null) {
             p1name.setText(p1n);
         }
-        if (p2n != null){
+        if (p2n != null) {
             p2name.setText(p2n);
         }
-        
+
         gp.add(p1name, 0, 6);
         gp.add(p2name, 1, 6);
         Button p1db = new Button("Tallenna pelaaja 1 tietokantaan");
@@ -188,9 +192,7 @@ public final class JavaFXMain {
                 p2.setName(p2name.getText());
                 this.p2n = p2name.getText();
                 pDao.saveOrUpdate(p2);
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (SQLException | ClassNotFoundException ex) {
                 System.out.println(ex);
             }
 

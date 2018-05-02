@@ -5,7 +5,6 @@ package hsbancalculator;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import hsbancalculator.ui.*;
 
 import java.sql.SQLException;
@@ -27,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
+ * Sovelluksen main-luokka.
  *
  * @author antlammi
  */
@@ -35,12 +35,19 @@ public class HearthstoneBanCalculator extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, Exception {
+    public static void main(String[] args) {
         //TextUI txU = new TextUI();
 
         launch(args);
     }
 
+    /**
+     * Käynnistää sovelluksen, pohjustaa eri ui-luokat ja näiden välisen
+     * navigaation.
+     *
+     * @param main
+     * @throws Exception
+     */
     @Override
     public void start(Stage main) throws Exception {
         main.setTitle("Hearthstone Ban Calculator");
@@ -68,9 +75,9 @@ public class HearthstoneBanCalculator extends Application {
         JavaFXDecks jfxd = new JavaFXDecks(main, bp);
 
         JavaFXPlayers jfxp = new JavaFXPlayers(main, bp);
-        
+
         JavaFXSimulation jfxs = new JavaFXSimulation(main, bp);
-        
+
         bp.setCenter(jfxm.getNakyma());
         mainview.setOnAction((event) -> {
             bp.setCenter(jfxm.getNakyma());

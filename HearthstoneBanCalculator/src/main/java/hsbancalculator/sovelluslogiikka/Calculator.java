@@ -10,6 +10,7 @@ import java.util.Random;
  * and open the template in the editor.
  */
 /**
+ * Ohjelman laskennalliset ominaisuudet, sekä simulaatio.
  *
  * @author antlammi
  */

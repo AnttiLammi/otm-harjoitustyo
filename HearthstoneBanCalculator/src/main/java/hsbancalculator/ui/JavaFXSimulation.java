@@ -27,6 +27,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Sovelluksen simulaationäkymä, sisältää kolme erilaista näkymää.
+ *
+ * @author antlammi
+ */
 public class JavaFXSimulation {
 
     private DeckDao dDao;
@@ -52,6 +57,14 @@ public class JavaFXSimulation {
 
     }
 
+    /**
+     * Simulaation päänäkymä, jossa valitaan pelaajat ja kilpailuformaatti, sekä
+     * täydennetään puuttuvat matchupit.
+     *
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
@@ -229,7 +242,10 @@ public class JavaFXSimulation {
         gp.add(simuloi, 0, 5);
         return gp;
     }
-
+    /** Sivunäkymä, jossa voi halutessaan rajata vastustajan bannia.
+     * 
+     * @return 
+     */
     public Parent getSimNakyma() {
         vBan.clear();
         GridPane gp = new GridPane();
@@ -300,7 +316,14 @@ public class JavaFXSimulation {
 
         return this.bp;
     }
-
+    /** Tulosnäkymä, kutsutaan simulaatio-luokkaa ja nähdään simulaation tulokset.
+     * 
+     * @param calculator
+     * @param conquest
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public Parent getTulosNakyma(Calculator calculator, Boolean conquest) throws SQLException, ClassNotFoundException {
         for (int i = 0; i < p1.lineup.size(); i++) {
             for (int j = 0; j < p2.lineup.size(); j++) {

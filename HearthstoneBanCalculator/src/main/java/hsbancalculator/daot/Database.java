@@ -8,6 +8,7 @@ package hsbancalculator.daot;
 import java.sql.*;
 
 /**
+ * Tietokannan pohjustus ja yhteyden haku.
  *
  * @author antlammi
  */
@@ -24,11 +25,19 @@ public class Database {
     }
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
-        // load the sqlite-JDBC driver using the current class loader
+
         Class.forName("org.sqlite.JDBC");
         return DriverManager.getConnection(databaseAddress);
     }
 
+    /**
+     * Mikäli tauluja ei löydy ennestään, luo uudet tietokanta-taulut: Deck(id,
+     * name), Player(id, name, deck1_id, deck2_id, deck3_id, deck4_id), Matchups
+     * (deck1_id, deck2_id, winrate).
+     *
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void createNewDatabase() throws SQLException, ClassNotFoundException {
 
         Connection conn = this.getConnection();

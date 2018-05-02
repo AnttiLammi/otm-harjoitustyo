@@ -10,21 +10,15 @@ import hsbancalculator.daot.DeckDao;
 import hsbancalculator.sovelluslogiikka.Deck;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
+ * Pakkanäkymä.
  *
  * @author antlammi
  */
@@ -34,14 +28,24 @@ public final class JavaFXDecks {
     public Database db;
     public DeckDao dDao;
     private BorderPane bp;
+
     public JavaFXDecks(Stage main, BorderPane bp) throws ClassNotFoundException, SQLException {
         this.main = main;
         this.bp = bp;
         db = new Database("jdbc:sqlite:hsbc.db");
         dDao = new DeckDao(db);
-        
+
     }
 
+    /**
+     * Palauttaa näkymän, jossa on listattuna kaikki tietokannasta löytyvät
+     * pakat. Klikkaamalla pakkojen nimiä voi siirtyä niiden Matchup-näkymiin ja
+     * delete nappuloilla ne voidaan poistaa.
+     *
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
@@ -64,7 +68,7 @@ public final class JavaFXDecks {
                 }
 
             });
-            
+
             nb2.setMinWidth(100.0);
             nb2.setMaxWidth(100.0);
             nb2.setOnAction((event) -> {

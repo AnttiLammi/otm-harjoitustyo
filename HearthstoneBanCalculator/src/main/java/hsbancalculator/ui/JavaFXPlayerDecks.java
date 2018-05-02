@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.EventType;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -26,6 +25,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
+ * Tietokannasta löytyvien pelaajien oma näkymä, voi tarkastella ja muokata
+ * pelaajan pakkoja.
  *
  * @author antlammi
  */
@@ -48,7 +49,12 @@ public class JavaFXPlayerDecks {
         this.player = player;
         this.bp = bp;
     }
-
+    /** Listataan pelaajan pakat ja mahdollistetaan niiden korvaaminen.
+     * 
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException 
+     */
     public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
         Button topLeftButton = new Button(player.name);
@@ -60,7 +66,6 @@ public class JavaFXPlayerDecks {
         VBox vb1 = new VBox();
         VBox vb2 = new VBox();
         VBox vb3 = new VBox();
-       
 
         List<Deck> db = this.player.lineup;
         for (int i = 0; i < db.size(); i++) {
@@ -88,23 +93,20 @@ public class JavaFXPlayerDecks {
 
                     this.pDao.delete(this.pDao.findByName(player.name));
                     final int size = db.size();
-                    for (int j=0; j<size; j++){
-                        if (db.get(j).name.equals(b1.getText())){
+                    for (int j = 0; j < size; j++) {
+                        if (db.get(j).name.equals(b1.getText())) {
                             db.remove(j);
                             dDao.saveOrUpdate(new Deck(tf.getText()));
                             Deck uusi = dDao.findOne(dDao.findIDByName(tf.getText()));
                             db.add(uusi);
                         }
                     }
-                    
-                    
+
                     this.player.lineup = (ArrayList<Deck>) db;
                     pDao.saveOrUpdate(player);
                     bp.setCenter(this.getNakyma());
-                    
-                } catch (SQLException ex) {
-                    Logger.getLogger(JavaFXPlayerDecks.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
+
+                } catch (SQLException | ClassNotFoundException ex) {
                     Logger.getLogger(JavaFXPlayerDecks.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });

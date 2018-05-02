@@ -8,21 +8,19 @@ package hsbancalculator.ui;
 import hsbancalculator.daot.Database;
 import hsbancalculator.daot.DeckDao;
 import hsbancalculator.daot.PlayerDao;
-import hsbancalculator.sovelluslogiikka.Deck;
 import hsbancalculator.sovelluslogiikka.Player;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
+ * Pelaajanäkymä, jossa voi tarkastella tietokannasta löytyviä pelaajia ja
+ * siirtyä näiden omiin näkymiinsä.
  *
  * @author antlammi
  */
@@ -30,7 +28,7 @@ public class JavaFXPlayers {
 
     private DeckDao dDao;
     private PlayerDao pDao;
-    private ArrayList<Deck> lineup;
+
     private Database db;
     private BorderPane bp;
     public Stage main;
@@ -43,6 +41,14 @@ public class JavaFXPlayers {
         this.bp = bp;
     }
 
+    /**
+     * Luokan näkymä-metodi, nappuloiden avulla siirrytään pelaajakohtaiseen
+     * näkymään tai poistetaan pelaaja kokonaan tietokannasta.
+     *
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
@@ -58,9 +64,7 @@ public class JavaFXPlayers {
                 try {
                     JavaFXPlayerDecks jfxpd = new JavaFXPlayerDecks(this.main, this.bp, pDao.findOne(pDao.findByName(nb1.getText())));
                     bp.setCenter(jfxpd.getNakyma());
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
 
@@ -72,9 +76,7 @@ public class JavaFXPlayers {
                 try {
                     pDao.delete(pDao.findByName(nb1.getText()));
                     bp.setCenter(this.getNakyma());
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
+                } catch (SQLException | ClassNotFoundException ex) {
                     System.out.println(ex);
                 }
             });

@@ -13,10 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
+ * Player-tietokantataulua koskevat operaatiot.
  *
  * @author antlammi
  */
@@ -28,6 +27,14 @@ public class PlayerDao implements Dao<Player, Integer> {
         this.database = database;
     }
 
+    /**
+     * Etsitään tietokantataulusta pelaaja tunnetun id:n avulla.
+     *
+     * @param key
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public Player findOne(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();
@@ -64,12 +71,19 @@ public class PlayerDao implements Dao<Player, Integer> {
         return p;
     }
 
+    /**
+     * Etsitään kaikki tietokantataulusta löytyvät pelaajat.
+     *
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public List<Player> findAll() throws SQLException, ClassNotFoundException {
         List<Player> players = new ArrayList<>();
 
         try (Connection conn = database.getConnection();
-            ResultSet result = conn.prepareStatement("SELECT * FROM Player").executeQuery()) {
+                ResultSet result = conn.prepareStatement("SELECT * FROM Player").executeQuery()) {
             DeckDao dDao = new DeckDao(database);
             while (result.next()) {
                 Integer pID = result.getInt("id");
@@ -92,6 +106,14 @@ public class PlayerDao implements Dao<Player, Integer> {
 
     }
 
+    /**
+     * Tallennetaan tietokantatauluun uusi pelaaja.
+     *
+     * @param player
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public Player saveOrUpdate(Player player) throws SQLException, ClassNotFoundException {
         DeckDao dDao = new DeckDao(database);
@@ -119,6 +141,14 @@ public class PlayerDao implements Dao<Player, Integer> {
 
     }
 
+    /**
+     * Etsitään nimen perusteella taulusta tietyn pelaajan id.
+     *
+     * @param name
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Integer findByName(String name) throws SQLException, ClassNotFoundException {
         try (Connection conn = database.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Player WHERE name = ?");
@@ -141,6 +171,13 @@ public class PlayerDao implements Dao<Player, Integer> {
 
     }
 
+    /**
+     * Poistetaan tietokannasta tietyn id:n omaava pelaaja.
+     *
+     * @param key
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void delete(Integer key) throws SQLException, ClassNotFoundException {
         Connection conn = database.getConnection();

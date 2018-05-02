@@ -5,11 +5,10 @@ package hsbancalculator.sovelluslogiikka;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import hsbancalculator.sovelluslogiikka.Deck;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
+/** Pelaaja-olio, sisältää lineupin ID:n ja nimen.
  *
  * @author antlammi
  */
@@ -28,7 +27,12 @@ public class Player {
         lineup.add(deck4);
 
     }
-
+    /**
+     * Asettaa pakalle winraten jotakin toista pakkaa vastaan.
+     * @param deck1
+     * @param deck2
+     * @param winrate 
+     */
     public void setWinrate(Deck deck1, Deck deck2, Double winrate) {
         for (int i = 0; i < lineup.size(); i++) {
             if (lineup.get(i).name.equals(deck1.name)) {
@@ -44,7 +48,9 @@ public class Player {
     public void setID(Integer id) {
         this.id = id;
     }
-
+    /**
+     * Tulostaa pelaaja-olioon talletettujen pakkojen kaikki matchupit.
+     */
     public void printWR() {
         for (int i = 0; i < lineup.size(); i++) {
             Deck pakka = lineup.get(i);
@@ -62,7 +68,12 @@ public class Player {
             System.out.println("");
         }
     }
-
+    /**
+     * Palauttaa pakan winraten toista vastaan tai -100 jos matchuppia ei löydy.
+     * @param deck1
+     * @param deck2
+     * @return 
+     */
     public Double getWinrate(Deck deck1, Deck deck2) {
         for (int i = 0; i < lineup.size(); i++) {
             if (lineup.get(i).name.equals(deck1.name)) {

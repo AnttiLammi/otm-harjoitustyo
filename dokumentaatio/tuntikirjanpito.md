@@ -22,4 +22,5 @@
 |29.4. |3      |Graafisen käyttöliittymän avulla pelaajien tietojen muuttaminen, simulaationäkymän aloitus|
 |2.5. |3       |Koko toiminnallisuus graafisessa käyttöliittymässä|
 |2.5. |2       |JavaDocin aloitus, testejä|
-|-     |yht: 42 | - | 
+|2.5. |1       |Uusia testejä|
+|-     |yht: 43 | - | 

@@ -4,8 +4,12 @@ import hsbancalculator.daot.Database;
 import hsbancalculator.daot.DeckDao;
 import hsbancalculator.daot.MatchupsDao;
 import hsbancalculator.daot.PlayerDao;
+import hsbancalculator.sovelluslogiikka.Calculator;
+import hsbancalculator.sovelluslogiikka.Deck;
 import hsbancalculator.sovelluslogiikka.Player;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +33,8 @@ public class JavaFXSimulation {
     private PlayerDao pDao;
     private Player p1;
     private Player p2;
+    private Boolean conquest;
+    private ArrayList<Deck> vBan;
     private MatchupsDao mDao;
     private Database db;
     private BorderPane bp;
@@ -41,6 +47,8 @@ public class JavaFXSimulation {
         pDao = new PlayerDao(db);
         mDao = new MatchupsDao(db);
         this.bp = bp;
+        vBan = new ArrayList<>();
+        this.conquest = true;
 
     }
 
@@ -68,6 +76,7 @@ public class JavaFXSimulation {
         gp.add(vb2, 1, 1);
         Button selectp1 = new Button("Confirm player 1");
         selectp1.setOnAction((event) -> {
+            vBan.clear();
             List vblist = vb1.getChildren();
             for (int i = 0; i < vblist.size(); i++) {
                 ToggleButton tb = (ToggleButton) vblist.get(i);
@@ -89,6 +98,7 @@ public class JavaFXSimulation {
 
         Button selectp2 = new Button("Confirm player 2");
         selectp2.setOnAction((event) -> {
+            vBan.clear();
             List vblist = vb1.getChildren();
             for (int i = 0; i < vblist.size(); i++) {
                 ToggleButton tb = (ToggleButton) vblist.get(i);
@@ -118,6 +128,7 @@ public class JavaFXSimulation {
         rb1.setSelected(true);
 
         RadioButton rb2 = new RadioButton("LHS");
+
         rb2.setToggleGroup(tg2);
 
         HBox hb = new HBox();
@@ -184,8 +195,117 @@ public class JavaFXSimulation {
             gp.add(smvb2, 1, 7);
             gp.add(smvb3, 2, 7);
             gp.add(smvb4, 3, 7);
+
+            if (smvb1.getChildren().isEmpty()) {
+                this.conquest = rb1.selectedProperty().getValue();
+                this.getSimNakyma();
+            }
         });
         gp.add(simuloi, 0, 5);
+        return gp;
+    }
+
+    public Parent getSimNakyma() {
+
+        GridPane gp = new GridPane();
+        this.bp.setCenter(gp);
+        VBox vb1 = new VBox();
+        VBox vb2 = new VBox();
+
+        Button b1 = new Button(this.p1.name);
+        Button b2 = new Button(this.p2.name);
+
+        vb1.getChildren().addAll(b1, new Text(""), new Text("Valitse vastustajan ban"), new Text(""));
+        vb2.getChildren().addAll(b2, new Text(""), new Text(""), new Text(""));
+
+        for (int i = 0; i < p1.lineup.size(); i++) {
+            Button d = new Button(p1.lineup.get(i).name);
+            Button sel = new Button("submit");
+
+            sel.setOnAction((event) -> {
+                try {
+                    vBan.add(dDao.findOne(dDao.findIDByName(d.getText())));
+                } catch (SQLException ex) {
+                    Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+            vb1.getChildren().add(d);
+            vb2.getChildren().add(sel);
+        }
+
+        gp.add(vb1, 0, 0);
+        gp.add(vb2, 1, 0);
+        gp.add(new Text(""), 0, 1);
+        gp.add(new Text(""), 1, 1);
+
+        Button simuloi = new Button("simuloi");
+        simuloi.setOnAction((event) -> {
+            Calculator calculator = new Calculator(p1, p2);
+            try {
+                this.getTulosNakyma(calculator, this.conquest);
+            } catch (SQLException ex) {
+                Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        gp.add(simuloi, 0, 1);
+
+        return this.bp;
+    }
+
+    public Parent getTulosNakyma(Calculator calculator, Boolean conquest) throws SQLException, ClassNotFoundException {
+        for (int i=0; i<p1.lineup.size(); i++){
+            for (int j=0; j<p2.lineup.size(); j++){
+                Deck d1 = p1.lineup.get(i);
+                Deck d2 = p2.lineup.get(j);
+                
+                p1.setWinrate(d1, d2, mDao.findOne(dDao.findIDByName(d1.name), dDao.findIDByName(d2.name)));
+                p2.setWinrate(d2, d1, mDao.findOne(dDao.findIDByName(d2.name), dDao.findIDByName(d1.name)));
+            }
+        }
+        HashMap<Deck, Double> tulos = new HashMap<>();
+        if (this.conquest == true) {
+            if (this.vBan.isEmpty()) {
+                tulos = calculator.parasBanConquest(p1);
+            } else {
+                tulos = calculator.parasBanConquest(p1, vBan);
+            }
+        } else {
+            if (this.vBan.isEmpty()) {
+                tulos = calculator.parasBanLHS(p1);
+            } else {
+                tulos = calculator.parasBanLHS(p1, vBan);
+            }
+        }
+        GridPane gp = new GridPane();
+        this.bp.setCenter(gp);
+        VBox vb1 = new VBox();
+        VBox vb2 = new VBox();
+        
+        Button p1b = new Button(p1.name + " vs");
+        Button p2b = new Button(p2.name);
+        
+        Button ban = new Button("Ban");
+        Button wr = new Button("Winrate");
+
+        vb1.getChildren().addAll(p1b, ban);
+        vb2.getChildren().addAll(p2b, wr);
+
+        for (int i = 0; i < p2.lineup.size(); i++) {
+            Deck d = p2.lineup.get(i);
+            Button b = new Button(d.name);
+            Button r = new Button(tulos.get(d).toString());
+
+            vb1.getChildren().add(b);
+            vb2.getChildren().add(r);
+
+        }
+        gp.add(vb1, 0, 0);
+        gp.add(vb2, 1, 0);
+
         return gp;
     }
 }

@@ -121,6 +121,7 @@ public class DeckDao implements Dao<Deck, Integer> {
 
     @Override
     public void delete(Integer key) throws SQLException, ClassNotFoundException {
+        
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE From Deck WHERE id = ?");
 
@@ -128,6 +129,20 @@ public class DeckDao implements Dao<Deck, Integer> {
         stmt.executeUpdate();
 
         stmt.close();
+        
+        stmt = conn.prepareStatement("Delete FROM Player WHERE deck1_id = ? OR deck2_id = ? OR deck3_id = ? OR deck4_id = ?");
+        stmt.setInt(1, key);
+        stmt.setInt(2, key);
+        stmt.setInt(3, key);
+        stmt.setInt(4, key);
+        
+        stmt.executeUpdate();
+        
+        stmt = conn.prepareStatement("Delete FROM Matchups WHERE deck1_id = ? OR deck2_id = ?");
+        stmt.setInt(1, key);
+        stmt.setInt(2, key);
+        
+        stmt.executeUpdate();
         conn.close();
     }
 

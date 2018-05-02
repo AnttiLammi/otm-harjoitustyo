@@ -23,4 +23,5 @@
 |2.5. |3       |Koko toiminnallisuus graafisessa käyttöliittymässä|
 |2.5. |2       |JavaDocin aloitus, testejä|
 |2.5. |1       |Uusia testejä|
-|-     |yht: 43 | - | 
+|2.5. |2       |Release, dokumentointi|
+|-     |yht: 45 | - | 

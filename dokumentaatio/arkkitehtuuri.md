@@ -16,7 +16,7 @@ Käyttöliittymä sisältää kokonaisuudessaan 8 näkymää.
 - Pelaajien pakkojen muokkaus
 - Simulaation pelaajien ja formaatin valinta, sekä puuttuvien matchuppien lisääminen
 - Vastustajan bannin rajaaminen
-- Simulaation tulokset
+- Simulaation tulokset  
 Lisäksi jokaisessa näkymässä on läsnä yläpalkki, jonka avulla pystyy navigoimaan joidenkin näistä näkymistä välillä. Jokainen näkymä on osa samaa BorderPane oliota, jonka yläosassa sijaitsee yläpalkki ja keskiosassa vaihtelee nämä eri näkymät. Käyttöliittymän ulkoasusta ja toteutuksesta lisää infoa [käyttöohjeessa](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md).   
 
 
@@ -31,7 +31,7 @@ Ohjelman hyödyntämät tiedot tallennetaan SQL muotoiseen tietokantaan. Ohjelma
 Tämän lisäksi *hsbancalculator.daot* luokasta löytyvät luokat:
 - DeckDao
 - PlayerDao
-- MatchupsDao
+- MatchupsDao  
 Näistä jokainen vastaa tietyn tietokantataulun operaatioista.
 
 # Ohjelman toiminnallisuus

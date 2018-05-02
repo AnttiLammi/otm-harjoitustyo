@@ -21,7 +21,7 @@ Mikäli pakkojen välinen matchup löytyy jo, se ilmestyy tekstikenttään. Lis�
 
 <img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/hsbancalculator_ohje_4.png">
 
-Samaten, kuten decks näkymässä delete napin avulla voidaan poistaa pelaaja tietokannasta. Myös samaan tapaan pelaajan nimeä painamalla voimme siirtyä muokkaamaan kyseisen pelaajan tietoja tietokannasa: 
+Samaten, kuten decks näkymässä delete napin avulla voidaan poistaa pelaaja tietokannasta. Myös samaan tapaan pelaajan nimeä painamalla voimme siirtyä muokkaamaan kyseisen pelaajan tietoja tietokannassa: 
 
 <img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/hsbancalculator_ohje_5.png">
 

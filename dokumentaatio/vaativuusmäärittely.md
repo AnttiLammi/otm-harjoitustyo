@@ -22,6 +22,7 @@ Perusversion jälkeen jatketaan kehitystä ajan salliessa seuraaviin ominaisuuks
 
 
 - Mahdollisuus laskea paras mahdollinen aloituspakka Last Hero Standing - formaatissa.
+- Tietokannan säilytys verkossa
 - Tietokannan hallinnoinnin muuttaminen erityisen käyttäjätyypin _adminin_ erityisoikeudeksi.
 - Normaalikäyttäjille käyttäjätunnuksen luomisen ja sisäänkirjautumisen mahdollisuus (ja täten kolmas käyttäjätyyppi)
   - Tämä tarjoaa mahdollisuuden säilyttää tietoa omista pakoistaan henkilökohtaisilla käyttäjäsivuilla, mikä nopeuttaa           sovelluksen käyttöä turnauksessa.

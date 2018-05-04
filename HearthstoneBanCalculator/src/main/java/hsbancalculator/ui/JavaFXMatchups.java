@@ -5,14 +5,17 @@
  */
 package hsbancalculator.ui;
 
+import com.sun.prism.paint.Color;
 import hsbancalculator.daot.Database;
 import hsbancalculator.daot.DeckDao;
 import hsbancalculator.daot.MatchupsDao;
 import hsbancalculator.sovelluslogiikka.Deck;
 import java.sql.SQLException;
 import java.util.List;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -47,24 +50,23 @@ public class JavaFXMatchups {
     /**
      * Palauttaa näkymän, jossa on lista tietokantataulusta löytyvistä pakoista
      * ja tekstikenttä, jossa on tietyn pakan matchup niitä vastaan jos se
-     * löytyy, arvoa voi muuttaa.
-     * Muiden pakkojen nimistä pystyy navigoimaan niiden matchup-näkymiin.
+     * löytyy, arvoa voi muuttaa. Muiden pakkojen nimistä pystyy navigoimaan
+     * niiden matchup-näkymiin.
+     *
      * @return @throws SQLException
      * @throws ClassNotFoundException
      */
     public Parent getNakyma() throws SQLException, ClassNotFoundException {
         GridPane gp = new GridPane();
-        Button topLeftButton = new Button(deck.name + " vs");
-        topLeftButton.setMinWidth(200.0);
-        topLeftButton.setMaxWidth(200.0);
+        Label topLeftLabel = new Label(deck.name + " vs");
 
-        gp.add(topLeftButton, 0, 0);
+        gp.add(topLeftLabel, 0, 0);
 
-        Button topMidButton = new Button("Winrate (kokonaisen prosentin tarkkuudella)");
-        topMidButton.setMinWidth(200.0);
-        topMidButton.setMaxWidth(200.0);
+        Label topMidLabel = new Label("Winrate: 0-100");
+        Label errorMSG = new Label("");
+        errorMSG.setTextFill(javafx.scene.paint.Color.RED);
 
-        gp.add(topMidButton, 1, 0);
+        gp.add(topMidLabel, 1, 0);
         VBox vb1 = new VBox();
         VBox vb2 = new VBox();
         VBox vb3 = new VBox();
@@ -97,33 +99,80 @@ public class JavaFXMatchups {
                     jfxmu = new JavaFXMatchups(this.main, bp, dDao.findOne(dDao.findIDByName(b.getText())));
                     bp.setCenter(jfxmu.getNakyma());
                 } catch (SQLException | ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    errorMSG.setText(ex.toString());
                 }
 
             });
             b2.setOnAction((event) -> {
-                Integer syote = Integer.parseInt(tf.getText());
+                Boolean valid = true;
+                Integer syote = -1;
                 try {
-                    Integer id = dDao.findIDByName(b.getText());
-                    Double winrate = 1.0 * syote / 100;
-                    if (winrate < 0 || winrate > 1) {
-                        tf.setText("Väärä syöte, 0-100");
-                    } else {
-                        mDao.saveOrUpdate(deck.id, id, winrate);
+                    syote = Integer.parseInt(tf.getText());
+                } catch (NumberFormatException n) {
+                    errorMSG.setText("Error: Wrong input type");
+                    valid = false;
+                }
+                if (valid) {
+                    try {
+                        Integer id = dDao.findIDByName(b.getText());
+                        Double winrate = 1.0 * syote / 100;
+                        if (winrate < 0 || winrate > 1) {
+                            errorMSG.setText("Error: Wrong input (0-100)");
+                        } else {
+                            mDao.saveOrUpdate(deck.id, id, winrate);
 
-                        Double p2wr = 1.0 - winrate;
-                        Double p2wrRounded = (double) Math.round(p2wr * 100) / 100;
-                        mDao.saveOrUpdate(id, deck.id, p2wrRounded);
+                            Double p2wr = 1.0 - winrate;
+                            Double p2wrRounded = (double) Math.round(p2wr * 100) / 100;
+                            mDao.saveOrUpdate(id, deck.id, p2wrRounded);
+                        }
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        errorMSG.setText(ex.toString());
                     }
-                } catch (SQLException | ClassNotFoundException ex) {
-                    System.out.println(ex);
                 }
             });
             vb1.getChildren().add(b);
             vb2.getChildren().add(tf);
             vb3.getChildren().add(b2);
-        }
 
+        }
+        Button submitAll = new Button("submit all");
+        submitAll.setMinWidth(100);
+        submitAll.setMaxWidth(100);
+        submitAll.setOnAction((event) -> {
+            List<Node> dList = vb1.getChildren();
+            List<Node> tList = vb2.getChildren();
+            Integer size = dList.size();
+            for (int j = 0; j < size; j++) {
+                Button d = (Button) dList.get(j);
+                TextField t = (TextField) tList.get(j);
+                Boolean valid = true;
+                Integer syote = -1;
+                try {
+                    syote = Integer.parseInt(t.getText());
+                } catch (NumberFormatException n) {
+                    errorMSG.setText("Error: Wrong input type");
+                    valid = false;
+                }
+                if (valid) {
+                    try {
+                        Integer id = dDao.findIDByName(d.getText());
+                        Double winrate = 1.0 * syote / 100;
+                        if (winrate < 0 || winrate > 1) {
+                            errorMSG.setText("Error: Wrong input (0-100)");
+                        } else {
+                            mDao.saveOrUpdate(deck.id, id, winrate);
+
+                            Double p2wr = 1.0 - winrate;
+                            Double p2wrRounded = (double) Math.round(p2wr * 100) / 100;
+                            mDao.saveOrUpdate(id, deck.id, p2wrRounded);
+                        }
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        errorMSG.setText(ex.toString());
+                    }
+                }
+            }
+        });
+        vb3.getChildren().add(submitAll);
         gp.add(vb1, 0, 1);
         gp.add(vb2, 1, 1);
         gp.add(vb3, 2, 1);

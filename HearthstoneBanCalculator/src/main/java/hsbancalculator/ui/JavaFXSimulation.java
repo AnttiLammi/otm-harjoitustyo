@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -165,37 +167,65 @@ public class JavaFXSimulation {
         simuloi.setMaxWidth(100);
 
         simuloi.setOnAction((event) -> {
-            Label label = new Label("Täytä puuttuvat matchupit");
 
-            VBox smvb1 = new VBox();
-            VBox smvb2 = new VBox();
-            VBox smvb3 = new VBox();
-            VBox smvb4 = new VBox();
-            for (int i = 0; i < p1.lineup.size(); i++) {
-                for (int j = 0; j < p2.lineup.size(); j++) {
-                    try {
-                        Double matchup = mDao.findOne(dDao.findIDByName(p1.lineup.get(i).name), dDao.findIDByName(p2.lineup.get(j).name));
-                        if (matchup == null) {
-                            Button smb1 = new Button(p1.lineup.get(i).name);
-                            smb1.setMinWidth(200);
-                            smb1.setMaxWidth(200);
+            this.conquest = rb1.selectedProperty().getValue();
+            this.getMissingNakyma();
 
-                            TextField tf = new TextField("Winrate vs");
-                            Button smb2 = new Button(p2.lineup.get(j).name);
+        });
+        gp.add(simuloi, 0, 5);
+        return gp;
+    }
 
-                            smb2.setMinWidth(200);
-                            smb2.setMaxWidth(200);
+    public Parent getMissingNakyma() {
 
-                            Button smb3 = new Button("submit");
+        GridPane gp = new GridPane();
+        this.bp.setCenter(gp);
+        Label label = new Label("Insert the missing matchups");
+        Label label2 = new Label("Winrate: 0-100");
+        VBox smvb1 = new VBox();
+        VBox smvb2 = new VBox();
+        VBox smvb3 = new VBox();
+        VBox smvb4 = new VBox();
+        Label errorMSG = new Label("");
+        errorMSG.setTextFill(Color.RED);
 
-                            smb3.setMinWidth(100);
-                            smb3.setMaxWidth(100);
+        for (int i = 0; i < p1.lineup.size(); i++) {
 
-                            smb3.setOnAction((smevent) -> {
-                                Integer winrateInt = Integer.parseInt(tf.getText());
+            for (int j = 0; j < p2.lineup.size(); j++) {
+                try {
+                    Double matchup = mDao.findOne(dDao.findIDByName(p1.lineup.get(i).name), dDao.findIDByName(p2.lineup.get(j).name));
+                    if (matchup == null) {
+                        Button smb1 = new Button(p1.lineup.get(i).name);
+                        smb1.setMinWidth(200);
+                        smb1.setMaxWidth(200);
+
+                        TextField tf = new TextField("");
+                        tf.minWidth(200);
+                        Button smb2 = new Button(p2.lineup.get(j).name);
+
+                        smb2.setMinWidth(200);
+                        smb2.setMaxWidth(200);
+
+                        Button smb3 = new Button("submit");
+
+                        smb3.setMinWidth(100);
+                        smb3.setMaxWidth(100);
+
+                        smb3.setOnAction((smevent) -> {
+
+                            Boolean valid = true;
+                            Integer winrateInt = -1;
+                            try {
+                                winrateInt = Integer.parseInt(tf.getText());
+                            } catch (NumberFormatException n) {
+                                errorMSG.setText("Error: Wrong input type");
+                                valid = false;
+                            }
+                            if (valid) {
+
                                 Double winrate = 1.0 * winrateInt / 100;
                                 if (winrate < 0 || winrate > 1) {
-                                    tf.setText("Väärä syöte, 0-100");
+                                    errorMSG.setText("Error: Wrong input (0-100)");
                                 } else {
                                     try {
                                         mDao.saveOrUpdate(dDao.findIDByName(smb1.getText()), dDao.findIDByName(smb2.getText()), winrate);
@@ -207,62 +237,161 @@ public class JavaFXSimulation {
                                         smvb2.getChildren().remove(tf);
                                         smvb3.getChildren().remove(smb2);
                                         smvb4.getChildren().remove(smb3);
+
                                     } catch (SQLException ex) {
                                         System.out.println(ex);
                                     } catch (ClassNotFoundException ex) {
                                         System.out.println(ex);
                                     }
                                 }
-                            });
-                            smvb1.getChildren().add(smb1);
-                            smvb2.getChildren().add(tf);
-                            smvb3.getChildren().add(smb2);
-                            smvb4.getChildren().add(smb3);
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                            }
+                        });
 
+                        smvb1.getChildren().add(smb1);
+                        smvb2.getChildren().add(tf);
+                        smvb3.getChildren().add(smb2);
+                        smvb4.getChildren().add(smb3);
+                    }
+                } catch (SQLException | ClassNotFoundException ex) {
+                    Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
-            gp.add(label, 0, 6);
-            gp.add(smvb1, 0, 7);
-            gp.add(smvb2, 1, 7);
-            gp.add(smvb3, 2, 7);
-            gp.add(smvb4, 3, 7);
 
+        }
+        ArrayList<Node> del1 = new ArrayList<>();
+        ArrayList<Node> del2 = new ArrayList<>();
+        ArrayList<Node> del3 = new ArrayList<>();
+        ArrayList<Node> del4 = new ArrayList<>();
+
+        Button submitAll = new Button("submit all");
+        submitAll.setMinWidth(100);
+        submitAll.setMaxWidth(100);
+        submitAll.setOnAction((eventS) -> {
+            List<Node> d1List = smvb1.getChildren();
+            List<Node> tList = smvb2.getChildren();
+            List<Node> d2list = smvb3.getChildren();
+            List<Node> sList = smvb4.getChildren();
+            Integer size = d1List.size();
+            for (int i = 0; i < size; i++) {
+                Button d1 = (Button) d1List.get(i);
+                TextField t = (TextField) tList.get(i);
+                Button d2 = (Button) d2list.get(i);
+                Boolean valid = true;
+                Integer syote = -1;
+                try {
+                    syote = Integer.parseInt(t.getText());
+                } catch (NumberFormatException n) {
+                    errorMSG.setText("Error: Wrong input type");
+                    valid = false;
+                }
+                if (valid) {
+                    try {
+                        Integer d1id = dDao.findIDByName(d1.getText());
+                        Integer d2id = dDao.findIDByName(d2.getText());
+                        Double winrate = 1.0 * syote / 100;
+                        if (winrate < 0 || winrate > 1) {
+                            errorMSG.setText("Error: Wrong input (0-100)");
+                        } else {
+                            mDao.saveOrUpdate(d1id, d2id, winrate);
+
+                            Double p2wr = 1.0 - winrate;
+                            Double p2wrRounded = (double) Math.round(p2wr * 100) / 100;
+                            mDao.saveOrUpdate(d2id, d1id, p2wrRounded);
+
+                            del1.add(d1);
+                            del2.add(t);
+                            del3.add(d2);
+                            del4.add(smvb4.getChildren().get(i));
+
+                        }
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        errorMSG.setText(ex.toString());
+                    }
+                }
+            }
+            Integer delSize = del1.size();
+            for (int i = 0; i < delSize; i++) {
+                smvb1.getChildren().remove(del1.get(i));
+                smvb2.getChildren().remove(del2.get(i));
+                smvb3.getChildren().remove(del3.get(i));
+                smvb4.getChildren().remove(del4.get(i));
+            }
             if (smvb1.getChildren().isEmpty()) {
-                this.conquest = rb1.selectedProperty().getValue();
-                this.getSimNakyma();
+                this.getBanNakyma();
             }
         });
-        gp.add(simuloi, 0, 5);
+
+        Button simuloi = new Button("simuloi");
+        simuloi.setMinWidth(200);
+        simuloi.setMaxWidth(200);
+
+        simuloi.setOnAction((transition) -> {
+            if (smvb1.getChildren().isEmpty()) {
+                this.getBanNakyma();
+
+            } else {
+                errorMSG.setText("Error: Missing matchups");
+            }
+        });
+        if (smvb1.getChildren().isEmpty()) {
+            this.getBanNakyma();
+        }
+        gp.add(label, 0, 0);
+        gp.add(label2, 1, 0);
+        gp.add(smvb1, 0, 1);
+        gp.add(smvb2, 1, 1);
+        gp.add(smvb3, 2, 1);
+        gp.add(smvb4, 3, 1);
+        gp.add(errorMSG, 0, 3);
+        gp.add(simuloi, 2, 3);
+        gp.add(submitAll, 3, 3);
         return gp;
     }
-    /** Sivunäkymä, jossa voi halutessaan rajata vastustajan bannia.
-     * 
-     * @return 
+
+    /**
+     * Sivunäkymä, jossa voi halutessaan rajata vastustajan bannia.
+     *
+     * @return
      */
-    public Parent getSimNakyma() {
-        vBan.clear();
+    public Parent getBanNakyma() {
+
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
         VBox vb1 = new VBox();
         VBox vb2 = new VBox();
+        VBox vb3 = new VBox();
 
-        Button b1 = new Button(this.p1.name);
+        Button b1 = new Button(this.p1.name + " vs");
         b1.setMinWidth(200);
         b1.setMaxWidth(200);
         Button b2 = new Button(this.p2.name);
         b2.setMinWidth(200);
         b2.setMaxWidth(200);
 
-        vb1.getChildren().addAll(b1, new Text(""), new Text("Valitse vastustajan ban"), new Text(""));
-        vb2.getChildren().addAll(b2, new Text(""), new Text(""), new Text(""));
+        Button b3 = new Button("Banned by opponent");
+        b3.setMinWidth(200);
+        b3.setMaxWidth(200);
+        vb1.getChildren().addAll(new Text("Choose your opponent's ban"), new Text(""), b1, new Text(""));
+        vb2.getChildren().addAll(new Text(""), new Text(""), b2, new Text(""));
+        vb3.getChildren().addAll(new Text(""), new Text(""), b3, new Text(""));
 
+        for (int i = 0; i < vBan.size(); i++) {
+            Button banned = new Button(vBan.get(i).name);
+            banned.setMinWidth(200);
+            banned.setMaxWidth(200);
+
+            banned.setOnAction((event) -> {
+                for (int j = 0; j < vBan.size(); j++) {
+                    if (vBan.get(j).name.equals(banned.getText())) {
+                        vBan.remove(j);
+                        this.getBanNakyma();
+                    }
+                }
+            });
+
+            vb3.getChildren().add(banned);
+        }
         for (int i = 0; i < p1.lineup.size(); i++) {
             Button d = new Button(p1.lineup.get(i).name);
 
@@ -271,8 +400,8 @@ public class JavaFXSimulation {
 
             Button sel = new Button("submit");
 
-            sel.setMinWidth(100);
-            sel.setMaxWidth(100);
+            sel.setMinWidth(200);
+            sel.setMaxWidth(200);
 
             sel.setOnAction((event) -> {
 
@@ -281,7 +410,11 @@ public class JavaFXSimulation {
                     Deck apu = dDao.findOne(dDao.findIDByName(d.getText()));
                     for (int j = 0; j < p1.lineup.size(); j++) {
                         if (p1.lineup.get(j).name.equals(apu.name)) {
-                            vBan.add(p1.lineup.get(j));
+                            if (!vBan.contains(p1.lineup.get(j))) {
+                                vBan.add(p1.lineup.get(j));
+
+                                this.getBanNakyma();
+                            }
                         }
                     }
                 } catch (SQLException ex) {
@@ -296,8 +429,10 @@ public class JavaFXSimulation {
 
         gp.add(vb1, 0, 0);
         gp.add(vb2, 1, 0);
+        gp.add(vb3, 2, 0);
         gp.add(new Text(""), 0, 1);
         gp.add(new Text(""), 1, 1);
+        gp.add(new Text(""), 2, 1);
 
         Button simuloi = new Button("simuloi");
         simuloi.setOnAction((event) -> {
@@ -314,15 +449,18 @@ public class JavaFXSimulation {
         simuloi.setMaxWidth(100);
         gp.add(simuloi, 0, 1);
 
-        return this.bp;
+        return gp;
     }
-    /** Tulosnäkymä, kutsutaan simulaatio-luokkaa ja nähdään simulaation tulokset.
-     * 
+
+    /**
+     * Tulosnäkymä, kutsutaan simulaatio-luokkaa ja nähdään simulaation
+     * tulokset.
+     *
      * @param calculator
      * @param conquest
      * @return
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
     public Parent getTulosNakyma(Calculator calculator, Boolean conquest) throws SQLException, ClassNotFoundException {
         for (int i = 0; i < p1.lineup.size(); i++) {
@@ -348,6 +486,7 @@ public class JavaFXSimulation {
                 tulos = calculator.parasBanLHS(p1, vBan);
             }
         }
+        vBan.clear();
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
         VBox vb1 = new VBox();

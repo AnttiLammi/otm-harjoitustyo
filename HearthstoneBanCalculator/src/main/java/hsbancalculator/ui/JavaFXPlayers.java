@@ -13,9 +13,11 @@ import java.sql.SQLException;
 import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -49,7 +51,11 @@ public class JavaFXPlayers {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public Parent getNakyma() throws SQLException, ClassNotFoundException {
+    public Parent getView() throws SQLException, ClassNotFoundException {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
         VBox vb2 = new VBox();
@@ -63,9 +69,9 @@ public class JavaFXPlayers {
             nb1.setOnAction((event) -> {
                 try {
                     JavaFXPlayerDecks jfxpd = new JavaFXPlayerDecks(this.main, this.bp, pDao.findOne(pDao.findByName(nb1.getText())));
-                    bp.setCenter(jfxpd.getNakyma());
+                    bp.setCenter(jfxpd.getView());
                 } catch (SQLException | ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    errorMSG.setText(ex.toString());
                 }
 
             });
@@ -75,9 +81,9 @@ public class JavaFXPlayers {
             nb2.setOnAction((event) -> {
                 try {
                     pDao.delete(pDao.findByName(nb1.getText()));
-                    bp.setCenter(this.getNakyma());
+                    bp.setCenter(this.getView());
                 } catch (SQLException | ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    errorMSG.setText(ex.toString());
                 }
             });
             vb1.getChildren().add(nb1);

@@ -16,7 +16,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -30,18 +32,20 @@ public final class JavaFXMain {
     public Database db;
     public DeckDao dDao;
     public PlayerDao pDao;
+    private BorderPane bp;
     private ArrayList<Deck> line1;
     private ArrayList<Deck> line2;
     private String p1n;
     private String p2n;
 
-    public JavaFXMain(Stage main) throws ClassNotFoundException, SQLException {
+    public JavaFXMain(Stage main, BorderPane bp) throws ClassNotFoundException, SQLException {
         this.main = main;
         db = new Database("jdbc:sqlite:hsbc.db");
         dDao = new DeckDao(db);
         pDao = new PlayerDao(db);
         line1 = new ArrayList<>();
         line2 = new ArrayList<>();
+        this.bp = bp;
     }
 
     /**
@@ -50,7 +54,12 @@ public final class JavaFXMain {
      *
      * @return
      */
-    public Parent getNakyma() {
+    public Parent getView() {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
+
         GridPane gp = new GridPane();
 
         TextField deck1 = new TextField();
@@ -63,16 +72,32 @@ public final class JavaFXMain {
         TextField deck7 = new TextField();
         TextField deck8 = new TextField();
         if (!this.line1.isEmpty()) {
-            deck1.setText(line1.get(0).name);
-            deck2.setText(line1.get(1).name);
-            deck3.setText(line1.get(2).name);
-            deck4.setText(line1.get(3).name);
+            if (this.line1.size() > 0) {
+                deck1.setText(line1.get(0).name);
+            }
+            if (this.line1.size() > 1) {
+                deck2.setText(line1.get(1).name);
+            }
+            if (this.line1.size() > 2) {
+                deck3.setText(line1.get(2).name);
+            }
+            if (this.line1.size() > 3) {
+                deck4.setText(line1.get(3).name);
+            }
         }
         if (!this.line2.isEmpty()) {
-            deck5.setText(line2.get(0).name);
-            deck6.setText(line2.get(1).name);
-            deck7.setText(line2.get(2).name);
-            deck8.setText(line2.get(3).name);
+            if (this.line2.size() > 0) {
+                deck5.setText(line2.get(0).name);
+            }
+            if (this.line2.size() > 1) {
+                deck6.setText(line2.get(1).name);
+            }
+            if (this.line2.size() > 2) {
+                deck7.setText(line2.get(2).name);
+            }
+            if (this.line2.size() > 3) {
+                deck8.setText(line2.get(3).name);
+            }
         }
         Label l1 = new Label("Omat Pakat");
         Label l2 = new Label("Vastustajan Pakat");
@@ -84,23 +109,36 @@ public final class JavaFXMain {
             try {
 
                 line1.clear();
+                if (!deck1.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck1.getText()));
+                    line1.add(dDao.findOne(dDao.findIDByName(deck1.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck1.getText()));
-                line1.add(0, dDao.findOne(dDao.findIDByName(deck1.getText())));
+                if (!deck2.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck2.getText()));
+                    line1.add(dDao.findOne(dDao.findIDByName(deck2.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck2.getText()));
-                line1.add(1, dDao.findOne(dDao.findIDByName(deck2.getText())));
+                if (!deck3.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck3.getText()));
+                    line1.add(dDao.findOne(dDao.findIDByName(deck3.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck3.getText()));
-                line1.add(2, dDao.findOne(dDao.findIDByName(deck3.getText())));
+                if (!deck4.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck4.getText()));
+                    line1.add(dDao.findOne(dDao.findIDByName(deck4.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck4.getText()));
-                line1.add(3, dDao.findOne(dDao.findIDByName(deck4.getText())));
-
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            } catch (ClassNotFoundException ex) {
-                System.out.println(ex);
+            } catch (SQLException | ClassNotFoundException ex) {
+                errorMSG.setText(ex.toString());
             }
         });
 
@@ -111,22 +149,35 @@ public final class JavaFXMain {
             try {
 
                 line2.clear();
-                dDao.saveOrUpdate(new Deck(deck5.getText()));
-                line2.add(0, dDao.findOne(dDao.findIDByName(deck5.getText())));
+                if (!deck5.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck5.getText()));
+                    line2.add(dDao.findOne(dDao.findIDByName(deck5.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck6.getText()));
-                line2.add(1, dDao.findOne(dDao.findIDByName(deck6.getText())));
+                if (!deck6.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck6.getText()));
+                    line2.add(dDao.findOne(dDao.findIDByName(deck6.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck7.getText()));
-                line2.add(2, dDao.findOne(dDao.findIDByName(deck7.getText())));
+                if (!deck7.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck7.getText()));
+                    line2.add(dDao.findOne(dDao.findIDByName(deck7.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
 
-                dDao.saveOrUpdate(new Deck(deck8.getText()));
-                line2.add(3, dDao.findOne(dDao.findIDByName(deck8.getText())));
-
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            } catch (ClassNotFoundException ex) {
-                System.out.println(ex);
+                if (!deck8.getText().equals("")) {
+                    dDao.saveOrUpdate(new Deck(deck8.getText()));
+                    line2.add(dDao.findOne(dDao.findIDByName(deck8.getText())));
+                } else {
+                    errorMSG.setText("Error: Missing deck");
+                }
+            } catch (SQLException | ClassNotFoundException ex) {
+                errorMSG.setText(ex.toString());
             }
 
         });
@@ -167,33 +218,49 @@ public final class JavaFXMain {
 
         p1db.setOnAction((event) -> {
             try {
-                Deck d1 = dDao.findOne(dDao.findIDByName(deck1.getText()));
-                Deck d2 = dDao.findOne(dDao.findIDByName(deck2.getText()));
-                Deck d3 = dDao.findOne(dDao.findIDByName(deck3.getText()));
-                Deck d4 = dDao.findOne(dDao.findIDByName(deck4.getText()));
-                Player p1 = new Player(d1, d2, d3, d4);
-                p1.setName(p1name.getText());
-                this.p1n = p1name.getText();
-                pDao.saveOrUpdate(p1);
-            } catch (SQLException ex) {
-                System.out.println(ex);
-            } catch (ClassNotFoundException ex) {
-                System.out.println(ex);
+                Boolean nullDeck = false;
+                if (deck1.getText().equals("") || deck2.getText().equals("") || deck3.getText().equals("") || deck4.getText().equals("")) {
+                    nullDeck = true;
+                }
+                if (!nullDeck) {
+                    Deck d1 = dDao.findOne(dDao.findIDByName(deck1.getText()));
+                    Deck d2 = dDao.findOne(dDao.findIDByName(deck2.getText()));
+                    Deck d3 = dDao.findOne(dDao.findIDByName(deck3.getText()));
+                    Deck d4 = dDao.findOne(dDao.findIDByName(deck4.getText()));
+
+                    Player p1 = new Player(d1, d2, d3, d4);
+                    p1.setName(p1name.getText());
+                    this.p1n = p1name.getText();
+                    pDao.saveOrUpdate(p1);
+                } else {
+                    errorMSG.setText("Error: Missing deck or deck missing from database");
+                }
+            } catch (SQLException | ClassNotFoundException ex) {
+                errorMSG.setText(ex.toString());
             }
 
         });
         p2db.setOnAction((event) -> {
             try {
-                Deck d5 = dDao.findOne(dDao.findIDByName(deck5.getText()));
-                Deck d6 = dDao.findOne(dDao.findIDByName(deck6.getText()));
-                Deck d7 = dDao.findOne(dDao.findIDByName(deck7.getText()));
-                Deck d8 = dDao.findOne(dDao.findIDByName(deck8.getText()));
-                Player p2 = new Player(d5, d6, d7, d8);
-                p2.setName(p2name.getText());
-                this.p2n = p2name.getText();
-                pDao.saveOrUpdate(p2);
+                Boolean nullDeck = false;
+                if (deck5.getText().equals("") || deck6.getText().equals("") || deck7.getText().equals("") || deck8.getText().equals("")) {
+                    nullDeck = true;
+                }
+                if (!nullDeck) {
+                    Deck d5 = dDao.findOne(dDao.findIDByName(deck5.getText()));
+                    Deck d6 = dDao.findOne(dDao.findIDByName(deck6.getText()));
+                    Deck d7 = dDao.findOne(dDao.findIDByName(deck7.getText()));
+                    Deck d8 = dDao.findOne(dDao.findIDByName(deck8.getText()));
+                    Player p2 = new Player(d5, d6, d7, d8);
+                    p2.setName(p2name.getText());
+                    this.p2n = p2name.getText();
+                    pDao.saveOrUpdate(p2);
+                } else {
+                    errorMSG.setText("Error: Missing deck or deck missing from database");
+                }
+
             } catch (SQLException | ClassNotFoundException ex) {
-                System.out.println(ex);
+                errorMSG.setText(ex.toString());
             }
 
         });

@@ -18,10 +18,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -49,13 +51,20 @@ public class JavaFXPlayerDecks {
         this.player = player;
         this.bp = bp;
     }
-    /** Listataan pelaajan pakat ja mahdollistetaan niiden korvaaminen.
-     * 
+
+    /**
+     * Listataan pelaajan pakat ja mahdollistetaan niiden korvaaminen.
+     *
      * @return
      * @throws SQLException
-     * @throws ClassNotFoundException 
+     * @throws ClassNotFoundException
      */
-    public Parent getNakyma() throws SQLException, ClassNotFoundException {
+    public Parent getView() throws SQLException, ClassNotFoundException {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
+        
         GridPane gp = new GridPane();
         Button topLeftButton = new Button(player.name);
         topLeftButton.setMinWidth(200.0);
@@ -76,11 +85,9 @@ public class JavaFXPlayerDecks {
 
                 try {
                     JavaFXMatchups jfxmu = new JavaFXMatchups(this.main, bp, dDao.findOne(dDao.findIDByName(b1.getText())));
-                    bp.setCenter(jfxmu.getNakyma());
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    bp.setCenter(jfxmu.getView());
+                } catch (SQLException | ClassNotFoundException ex) {
+                    errorMSG.setText(ex.toString());
                 }
             });
 
@@ -104,10 +111,10 @@ public class JavaFXPlayerDecks {
 
                     this.player.lineup = (ArrayList<Deck>) db;
                     pDao.saveOrUpdate(player);
-                    bp.setCenter(this.getNakyma());
+                    bp.setCenter(this.getView());
 
                 } catch (SQLException | ClassNotFoundException ex) {
-                    Logger.getLogger(JavaFXPlayerDecks.class.getName()).log(Level.SEVERE, null, ex);
+                    errorMSG.setText(ex.toString());
                 }
             });
             vb1.getChildren().add(b1);

@@ -12,9 +12,11 @@ import java.sql.SQLException;
 import java.util.List;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -46,7 +48,11 @@ public final class JavaFXDecks {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public Parent getNakyma() throws SQLException, ClassNotFoundException {
+    public Parent getView() throws SQLException, ClassNotFoundException {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
         VBox vb2 = new VBox();
@@ -60,11 +66,9 @@ public final class JavaFXDecks {
             nb1.setOnAction((event) -> {
                 try {
                     JavaFXMatchups jfxmu = new JavaFXMatchups(this.main, bp, dDao.findOne(dDao.findIDByName(nb1.getText())));
-                    bp.setCenter(jfxmu.getNakyma());
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    bp.setCenter(jfxmu.getView());
+                } catch (SQLException | ClassNotFoundException ex) {
+                    errorMSG.setText(ex.toString());
                 }
 
             });
@@ -74,15 +78,14 @@ public final class JavaFXDecks {
             nb2.setOnAction((event) -> {
                 try {
                     dDao.delete(dDao.findIDByName(nb1.getText()));
-                    bp.setCenter(this.getNakyma());
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                } catch (ClassNotFoundException ex) {
-                    System.out.println(ex);
+                    bp.setCenter(this.getView());
+                } catch (SQLException | ClassNotFoundException ex) {
+                    errorMSG.setText(ex.toString());
                 }
             });
             vb1.getChildren().add(nb1);
             vb2.getChildren().add(nb2);
+            
         }
 
         gp.add(vb1, 0, 0);

@@ -56,15 +56,18 @@ public class JavaFXMatchups {
      * @return @throws SQLException
      * @throws ClassNotFoundException
      */
-    public Parent getNakyma() throws SQLException, ClassNotFoundException {
+    public Parent getView() throws SQLException, ClassNotFoundException {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(javafx.scene.paint.Color.RED);
+        bp.setBottom(errorMSG);
+        
         GridPane gp = new GridPane();
         Label topLeftLabel = new Label(deck.name + " vs");
 
         gp.add(topLeftLabel, 0, 0);
 
         Label topMidLabel = new Label("Winrate: 0-100");
-        Label errorMSG = new Label("");
-        errorMSG.setTextFill(javafx.scene.paint.Color.RED);
 
         gp.add(topMidLabel, 1, 0);
         VBox vb1 = new VBox();
@@ -97,7 +100,7 @@ public class JavaFXMatchups {
 
                 try {
                     jfxmu = new JavaFXMatchups(this.main, bp, dDao.findOne(dDao.findIDByName(b.getText())));
-                    bp.setCenter(jfxmu.getNakyma());
+                    bp.setCenter(jfxmu.getView());
                 } catch (SQLException | ClassNotFoundException ex) {
                     errorMSG.setText(ex.toString());
                 }
@@ -172,10 +175,12 @@ public class JavaFXMatchups {
                 }
             }
         });
-        vb3.getChildren().add(submitAll);
+
         gp.add(vb1, 0, 1);
         gp.add(vb2, 1, 1);
         gp.add(vb3, 2, 1);
+        gp.add(errorMSG, 1, 2);
+        gp.add(submitAll, 2, 2);
         return gp;
     }
 }

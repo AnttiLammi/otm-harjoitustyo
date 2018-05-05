@@ -67,7 +67,11 @@ public class JavaFXSimulation {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public Parent getNakyma() throws SQLException, ClassNotFoundException {
+    public Parent getView() throws SQLException, ClassNotFoundException {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
         GridPane gp = new GridPane();
         VBox vb1 = new VBox();
         ToggleGroup tg1 = new ToggleGroup();
@@ -79,6 +83,7 @@ public class JavaFXSimulation {
             tb.setToggleGroup(tg1);
             vb1.getChildren().add(tb);
         }
+
         VBox vb2 = new VBox();
         if (p1 != null) {
             Button uusi = new Button("Pelaaja 1: " + p1.name);
@@ -103,6 +108,7 @@ public class JavaFXSimulation {
         selectp1.setOnAction((event) -> {
 
             List vblist = vb1.getChildren();
+
             for (int i = 0; i < vblist.size(); i++) {
                 ToggleButton tb = (ToggleButton) vblist.get(i);
 
@@ -110,11 +116,11 @@ public class JavaFXSimulation {
 
                     try {
                         this.p1 = pDao.findOne(pDao.findByName(tb.getText()));
-                        bp.setCenter(this.getNakyma());
-                    } catch (SQLException ex) {
-                        System.out.println(ex);
-                    } catch (ClassNotFoundException ex) {
-                        System.out.println(ex);
+                        bp.setCenter(this.getView());
+                    } catch (SQLException | ClassNotFoundException ex) {
+
+                        errorMSG.setText(ex.toString());
+
                     }
                 }
 
@@ -134,11 +140,9 @@ public class JavaFXSimulation {
 
                     try {
                         this.p2 = pDao.findOne(pDao.findByName(tb.getText()));
-                        bp.setCenter(this.getNakyma());
-                    } catch (SQLException ex) {
-                        System.out.println(ex);
-                    } catch (ClassNotFoundException ex) {
-                        System.out.println(ex);
+                        bp.setCenter(this.getView());
+                    } catch (SQLException | ClassNotFoundException ex) {
+                        errorMSG.setText(ex.toString());
                     }
                 }
             }
@@ -167,17 +171,25 @@ public class JavaFXSimulation {
         simuloi.setMaxWidth(100);
 
         simuloi.setOnAction((event) -> {
+            if (p1 != null && p2 != null) {
+                this.conquest = rb1.selectedProperty().getValue();
+                this.getMissingView();
+            } else {
 
-            this.conquest = rb1.selectedProperty().getValue();
-            this.getMissingNakyma();
+                errorMSG.setText("Error: No players selected.");
+            }
 
         });
         gp.add(simuloi, 0, 5);
         return gp;
     }
 
-    public Parent getMissingNakyma() {
-
+    public Parent getMissingView() {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
+        
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
         Label label = new Label("Insert the missing matchups");
@@ -186,8 +198,6 @@ public class JavaFXSimulation {
         VBox smvb2 = new VBox();
         VBox smvb3 = new VBox();
         VBox smvb4 = new VBox();
-        Label errorMSG = new Label("");
-        errorMSG.setTextFill(Color.RED);
 
         for (int i = 0; i < p1.lineup.size(); i++) {
 
@@ -318,7 +328,7 @@ public class JavaFXSimulation {
                 smvb4.getChildren().remove(del4.get(i));
             }
             if (smvb1.getChildren().isEmpty()) {
-                this.getBanNakyma();
+                this.getBanView();
             }
         });
 
@@ -328,14 +338,14 @@ public class JavaFXSimulation {
 
         simuloi.setOnAction((transition) -> {
             if (smvb1.getChildren().isEmpty()) {
-                this.getBanNakyma();
+                this.getBanView();
 
             } else {
                 errorMSG.setText("Error: Missing matchups");
             }
         });
         if (smvb1.getChildren().isEmpty()) {
-            this.getBanNakyma();
+            this.getBanView();
         }
         gp.add(label, 0, 0);
         gp.add(label2, 1, 0);
@@ -354,8 +364,12 @@ public class JavaFXSimulation {
      *
      * @return
      */
-    public Parent getBanNakyma() {
-
+    public Parent getBanView() {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
+        
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
         VBox vb1 = new VBox();
@@ -385,7 +399,7 @@ public class JavaFXSimulation {
                 for (int j = 0; j < vBan.size(); j++) {
                     if (vBan.get(j).name.equals(banned.getText())) {
                         vBan.remove(j);
-                        this.getBanNakyma();
+                        this.getBanView();
                     }
                 }
             });
@@ -413,14 +427,12 @@ public class JavaFXSimulation {
                             if (!vBan.contains(p1.lineup.get(j))) {
                                 vBan.add(p1.lineup.get(j));
 
-                                this.getBanNakyma();
+                                this.getBanView();
                             }
                         }
                     }
-                } catch (SQLException ex) {
-                    Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException | ClassNotFoundException ex) {
+                    errorMSG.setText(ex.toString());
                 }
             });
             vb1.getChildren().add(d);
@@ -438,11 +450,9 @@ public class JavaFXSimulation {
         simuloi.setOnAction((event) -> {
             Calculator calculator = new Calculator(p1, p2);
             try {
-                this.getTulosNakyma(calculator, this.conquest);
-            } catch (SQLException ex) {
-                Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JavaFXSimulation.class.getName()).log(Level.SEVERE, null, ex);
+                this.getResultView(calculator, this.conquest);
+            } catch (SQLException | ClassNotFoundException ex) {
+               errorMSG.setText(ex.toString());
             }
         });
         simuloi.setMinWidth(100);
@@ -462,7 +472,12 @@ public class JavaFXSimulation {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public Parent getTulosNakyma(Calculator calculator, Boolean conquest) throws SQLException, ClassNotFoundException {
+    public Parent getResultView(Calculator calculator, Boolean conquest) throws SQLException, ClassNotFoundException {
+        Label errorMSG = new Label();
+        errorMSG.setText("");
+        errorMSG.setTextFill(Color.RED);
+        bp.setBottom(errorMSG);
+       
         for (int i = 0; i < p1.lineup.size(); i++) {
             for (int j = 0; j < p2.lineup.size(); j++) {
                 Deck d1 = p1.lineup.get(i);

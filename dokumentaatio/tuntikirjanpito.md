@@ -25,4 +25,5 @@
 |2.5. |1       |Uusia testejä|
 |2.5. |2       |Release, dokumentointi|
 |4.5.|2        |Päivityksiä käyttöliittymään|
-|-     |yht: 45 | - | 
+|5.5.|2        |Virhetilanteiden käsittelyä|
+|**yht.** | 47 | - | 

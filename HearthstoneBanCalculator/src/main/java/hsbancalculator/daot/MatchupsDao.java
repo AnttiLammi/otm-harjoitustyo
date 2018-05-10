@@ -70,7 +70,6 @@ public class MatchupsDao {
                 stmt.setInt(1, key1);
                 stmt.setInt(2, key2);
                 stmt.setDouble(3, wr);
-
                 stmt.executeUpdate();
 
                 return findOne(key1, key2);
@@ -81,7 +80,6 @@ public class MatchupsDao {
                 stmt.setDouble(1, wr);
                 stmt.setInt(2, key1);
                 stmt.setInt(3, key2);
-
                 stmt.executeUpdate();
 
                 return findOne(key1, key2);

@@ -489,19 +489,7 @@ public class JavaFXSimulation {
         }
         HashMap<Deck, Double> tulos = new HashMap<>();
         tulos = calculator.calculateBan(vBan, conquest);
-        /*if (this.conquest == true) {
-            if (this.vBan.isEmpty()) {
-                tulos = calculator.parasBanConquest();
-            } else {
-                tulos = calculator.parasBanConquest(vBan);
-            }
-        } else {
-            if (this.vBan.isEmpty()) {
-                tulos = calculator.parasBanLHS();
-            } else {
-                tulos = calculator.parasBanLHS(vBan);
-            }
-        }*/
+        
         vBan.clear();
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);

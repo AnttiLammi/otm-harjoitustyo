@@ -57,9 +57,7 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.0</version>
                 <configuration>
-                    <excludes>
-                        <exclude>hsbancalculator/*</exclude>
-                    </excludes>
+                    
                     <excludes>
                         <exclude>hsbancalculator/ui/*</exclude>
                     </excludes>
@@ -98,6 +96,8 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
                 <configuration>
+                    
+                    <excludes>hsbancalculator/ui/*</excludes>
                     <configLocation>checkstyle.xml</configLocation>
                 </configuration>
             </plugin>

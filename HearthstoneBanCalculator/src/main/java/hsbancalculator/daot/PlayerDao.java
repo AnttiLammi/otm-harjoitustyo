@@ -46,7 +46,6 @@ public class PlayerDao implements Dao<Player, Integer> {
         if (!hasOne) {
             return null;
         }
-
         Integer id = rs.getInt("id");
         String name = rs.getString("name");
         Integer deck1id = rs.getInt("deck1_id");
@@ -56,18 +55,16 @@ public class PlayerDao implements Dao<Player, Integer> {
 
         stmt.close();
         rs.close();
-
         conn.close();
+        
         DeckDao dDao = new DeckDao(database);
         Deck d1 = dDao.findOne(deck1id);
         Deck d2 = dDao.findOne(deck2id);
         Deck d3 = dDao.findOne(deck3id);
         Deck d4 = dDao.findOne(deck4id);
-
         Player p = new Player(d1, d2, d3, d4);
         p.setID(id);
         p.setName(name);
-
         return p;
     }
 

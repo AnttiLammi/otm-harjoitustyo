@@ -6,7 +6,7 @@ Sovellus on apuväline Hearthstone-pelissä kilpaileville, joka laskee molempien
 
 ## Käyttäjät
 
-Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi käyttää sovellusta normaalisti. Tämä ei vaadi kirjautumista, mutta myöhemmin saatetaan lisätä ominaisuuksia, jotka antavat siihen mahdollisuuden. Myöhemmin saatetaan lisätä erillinen, sisäänkirjautumisen vaativa, käyttäjätyyppi _(admin)_, joka kykenee hallinnoimaan pakkojen tiedot sisältävää tietokantaa. Siihen asti tietokannan hallinnointi on itse ohjelmoijan vastuulla.
+Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi käyttää sovellusta normaalisti. Tämä ei vaadi kirjautumista, mutta myöhemmin saatetaan lisätä ominaisuuksia, jotka antavat siihen mahdollisuuden. Myöhemmin saatetaan lisätä erillinen, sisäänkirjautumisen vaativa, käyttäjätyyppi _(admin)_, joka kykenee hallinnoimaan pakkojen tiedot sisältävää tietokantaa. Siihen asti tietokannan hallinnointi on kunkin käyttäjän omalla vastuulla ja tietokanta säilytetään paikallisena tiedostona.
 
 ## Perusversion tarjoama toiminnallisuus
 
@@ -15,7 +15,7 @@ Alkuun on vain yksi käyttäjätyyppi _(normaalikäyttäjä)_, joka voi käyttä
   - Tiedot pakkojen välisistä voittoprosenteista säilytetään tietokannassa.
   - Sovellus tukee kahta yleisintä kilpailuformaattia: Conquestia ja Last Hero Standingiä.
   - Graafinen käyttöliittymä, jonka avulla voi valita pakat.
-- Käyttäjä voi lisäksi muokata tietokantaa käytön yhteydessä tai erikseen.
+- Käyttäjä voi lisäksi muokata tietokantaa.
 
 ## Jatkokehitysideoita
 Perusversion jälkeen jatketaan kehitystä ajan salliessa seuraaviin ominaisuuksiin. Lista on jotakuinkin järjestyksessä ensimmäisenä lisättävästä viimeisenä lisättävään.

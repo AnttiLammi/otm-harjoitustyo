@@ -189,7 +189,7 @@ public class JavaFXSimulation {
         errorMSG.setText("");
         errorMSG.setTextFill(Color.RED);
         bp.setBottom(errorMSG);
-        
+
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
         Label label = new Label("Insert the missing matchups");
@@ -369,7 +369,7 @@ public class JavaFXSimulation {
         errorMSG.setText("");
         errorMSG.setTextFill(Color.RED);
         bp.setBottom(errorMSG);
-        
+
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
         VBox vb1 = new VBox();
@@ -452,7 +452,7 @@ public class JavaFXSimulation {
             try {
                 this.getResultView(calculator, this.conquest);
             } catch (SQLException | ClassNotFoundException ex) {
-               errorMSG.setText(ex.toString());
+                errorMSG.setText(ex.toString());
             }
         });
         simuloi.setMinWidth(100);
@@ -477,7 +477,7 @@ public class JavaFXSimulation {
         errorMSG.setText("");
         errorMSG.setTextFill(Color.RED);
         bp.setBottom(errorMSG);
-       
+
         for (int i = 0; i < p1.lineup.size(); i++) {
             for (int j = 0; j < p2.lineup.size(); j++) {
                 Deck d1 = p1.lineup.get(i);
@@ -488,19 +488,20 @@ public class JavaFXSimulation {
             }
         }
         HashMap<Deck, Double> tulos = new HashMap<>();
-        if (this.conquest == true) {
+        tulos = calculator.calculateBan(vBan, conquest);
+        /*if (this.conquest == true) {
             if (this.vBan.isEmpty()) {
-                tulos = calculator.parasBanConquest(p1);
+                tulos = calculator.parasBanConquest();
             } else {
-                tulos = calculator.parasBanConquest(p1, vBan);
+                tulos = calculator.parasBanConquest(vBan);
             }
         } else {
             if (this.vBan.isEmpty()) {
-                tulos = calculator.parasBanLHS(p1);
+                tulos = calculator.parasBanLHS();
             } else {
-                tulos = calculator.parasBanLHS(p1, vBan);
+                tulos = calculator.parasBanLHS(vBan);
             }
-        }
+        }*/
         vBan.clear();
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
@@ -548,7 +549,8 @@ public class JavaFXSimulation {
         }
         gp.add(vb1, 0, 0);
         gp.add(vb2, 1, 0);
-
+        p1 = null;
+        p2 = null;
         return gp;
     }
 }

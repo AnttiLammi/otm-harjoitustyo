@@ -16,347 +16,195 @@ import java.util.Random;
  */
 public class Calculator {
 
-    public Player pelaaja1;
-    public Player pelaaja2;
+    public Player player1;
+    public Player player2;
 
     private Random rng;
 
     /**
      * Konstruktori, joka pohjustaa rng muuttujan ja pelaajat 1 ja 2.
      *
-     * @param pelaaja1
-     * @param pelaaja2
+     * @param p1
+     * @param p2
      */
-    public Calculator(Player pelaaja1, Player pelaaja2) {
-        this.pelaaja1 = pelaaja1;
-        this.pelaaja2 = pelaaja2;
+    public Calculator(Player p1, Player p2) {
+        this.player1 = p1;
+        this.player2 = p2;
 
         this.rng = new Random();
 
     }
-    public void setRandom(Random random){
+
+    public void setRandom(Random random) {
         this.rng = random;
     }
-    public Random getRandom(){
+
+    public Random getRandom() {
         return this.rng;
     }
+
     /**
-     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
-     * Conquest-formaatissa, kun vastustajan ban on rajattu tiettyihin
-     * vaihtoehtoihin.
+     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin. Voidaan rajata eri bannien perusteella, parametrina formaatti.
      *
      *
-     * @param pelaaja
-     * @param banVaihtoehdot
+     * @param Conquest
+     * @param p1banlist
      * @return
      */
-    public HashMap<Deck, Double> parasBanConquest(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
-        ArrayList<Deck> p1 = new ArrayList<>();
-        ArrayList<Deck> p2 = new ArrayList<>();
-        Player toinenPelaaja;
-        if (pelaaja == this.pelaaja1) {
-            p1 = pelaaja1.lineup;
-            p2 = pelaaja2.lineup;
-            toinenPelaaja = pelaaja2;
-        } else {
-            p1 = pelaaja2.lineup;
-            p2 = pelaaja1.lineup;
-            toinenPelaaja = pelaaja1;
-        }
-        HashMap<Deck, Double> simtulos = new HashMap<>();
-        HashMap<Deck, Integer> simvoitot = new HashMap<>();
-        HashMap<Deck, Integer> simapu = new HashMap<>();
+    
+    public HashMap<Deck, Double> calculateBan(ArrayList<Deck> p1banlist, Boolean conquest) {
+        
+        ArrayList<Deck> p1 = player1.lineup;
+        ArrayList<Deck> p2 = player2.lineup;
+
+        HashMap<Deck, Double> simresult = new HashMap<>();
+        HashMap<Deck, Integer> simwins = new HashMap<>();
+        HashMap<Deck, Integer> simhelp = new HashMap<>();
 
         Integer simkierrokset = 1000000;
         for (int i = 0; i <= simkierrokset; i++) {
-            Deck p1ban = banVaihtoehdot.get(rng.nextInt(banVaihtoehdot.size()));
+            Deck p1ban;
+            if (p1banlist.isEmpty()) {
+                p1ban = p1.get(rng.nextInt(4));
+            } else {
+                p1ban = p1banlist.get(rng.nextInt(p1banlist.size()));
+            }
             Deck p2ban = p2.get(rng.nextInt(4));
 
-            simapu.putIfAbsent(p2ban, 0);
-            simapu.put(p2ban, simapu.get(p2ban) + 1);
-
-            Player voittaja = simuloiConquest(pelaaja, p1ban, pelaaja2, p2ban);
-            if (voittaja == pelaaja) {
-                simvoitot.putIfAbsent(p2ban, 0);
-                simvoitot.put(p2ban, simvoitot.get(p2ban) + 1);
+            simhelp.putIfAbsent(p2ban, 0);
+            simhelp.put(p2ban, simhelp.get(p2ban) + 1);
+            Player winner;
+            if (conquest) {
+                winner = simulateConquest(player1, p1ban, player2, p2ban);
+            } else {
+                winner = simulateLHS(player1, p1ban, player2, p2ban);
+            }
+            if (winner == player1) {
+                simwins.putIfAbsent(p2ban, 0);
+                simwins.put(p2ban, simwins.get(p2ban) + 1);
             }
         }
 
         ArrayList<Deck> line = new ArrayList<>();
-        simapu.keySet().forEach(s -> line.add(s));
+        simhelp.keySet().forEach(s -> line.add(s));
 
         for (int i = 0; i < line.size(); i++) {
-            Deck pakka = line.get(i);
-            simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
+            Deck deck = line.get(i);
+            simresult.put(deck, 1.0 * simwins.get(deck) / simhelp.get(deck));
 
         }
-        return simtulos;
+        return simresult;
     }
 
-    /**
-     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
-     * Conquest-formaatissa, kun vastustajan ban on täysin satunnaisesti
-     * valittu.
-     *
-     * @param pelaaja
-     * @return
-     */
-    public HashMap<Deck, Double> parasBanConquest(Player pelaaja) {
-        ArrayList<Deck> p1;
-        ArrayList<Deck> p2;
-
-        Player toinenPelaaja;
-        if (pelaaja == this.pelaaja1) {
-            p1 = pelaaja1.lineup;
-            p2 = pelaaja2.lineup;
-            toinenPelaaja = pelaaja2;
-        } else {
-            p1 = pelaaja2.lineup;
-            p2 = pelaaja1.lineup;
-            toinenPelaaja = pelaaja1;
-        }
-
-        HashMap<Deck, Double> simtulos = new HashMap<>();
-        HashMap<Deck, Integer> simvoitot = new HashMap<>();
-        HashMap<Deck, Integer> simapu = new HashMap<>();
-
-        Integer simkierrokset = 1000000;
-        for (int i = 0; i <= simkierrokset; i++) {
-            Deck p1ban = p1.get(rng.nextInt(4));
-            Deck p2ban = p2.get(rng.nextInt(4));
-
-            simapu.putIfAbsent(p2ban, 0);
-            simapu.put(p2ban, simapu.get(p2ban) + 1);
-
-            Player voittaja = simuloiConquest(pelaaja, p1ban, pelaaja2, p2ban);
-            if (voittaja == pelaaja) {
-                simvoitot.putIfAbsent(p2ban, 0);
-                simvoitot.put(p2ban, simvoitot.get(p2ban) + 1);
-            }
-        }
-
-        ArrayList<Deck> line = new ArrayList<>();
-        simapu.keySet().forEach(s -> line.add(s));
-
-        for (int i = 0; i < line.size(); i++) {
-            Deck pakka = line.get(i);
-            simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-
-        }
-        return simtulos;
-    }
-
-    /**
-     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
-     * LHS-formaatissa, kun vastustajan ban on täysin satunnaisesti valittu.
-     *
-     * @param pelaaja
-     * @return
-     */
-    public HashMap<Deck, Double> parasBanLHS(Player pelaaja) {
-        ArrayList<Deck> p1;
-        ArrayList<Deck> p2;
-
-        Player toinenPelaaja;
-        if (pelaaja == this.pelaaja1) {
-            p1 = pelaaja1.lineup;
-            p2 = pelaaja2.lineup;
-            toinenPelaaja = pelaaja2;
-        } else {
-            p1 = pelaaja2.lineup;
-            p2 = pelaaja1.lineup;
-            toinenPelaaja = pelaaja1;
-        }
-
-        HashMap<Deck, Double> simtulos = new HashMap<>();
-        HashMap<Deck, Integer> simvoitot = new HashMap<>();
-        HashMap<Deck, Integer> simapu = new HashMap<>();
-
-        Integer simkierrokset = 1000000;
-        for (int i = 0; i <= simkierrokset; i++) {
-            Deck p1ban = p1.get(rng.nextInt(4));
-            Deck p2ban = p2.get(rng.nextInt(4));
-
-            simapu.putIfAbsent(p2ban, 0);
-            simapu.put(p2ban, simapu.get(p2ban) + 1);
-
-            Player voittaja = simuloiLHS(pelaaja, p1ban, pelaaja2, p2ban);
-            if (voittaja == pelaaja) {
-                simvoitot.putIfAbsent(p2ban, 0);
-                simvoitot.put(p2ban, simvoitot.get(p2ban) + 1);
-            }
-        }
-
-        ArrayList<Deck> line = new ArrayList<>();
-        simapu.keySet().forEach(s -> line.add(s));
-
-        for (int i = 0; i < line.size(); i++) {
-            Deck pakka = line.get(i);
-            simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-
-        }
-        return simtulos;
-    }
-
-    /**
-     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin
-     * LHS-formaatissa, kun vastustajan ban on rajattu tiettyihin
-     * vaihtoehtoihin.
-     *
-     * @param pelaaja
-     * @param banVaihtoehdot
-     * @return
-     */
-    public HashMap<Deck, Double> parasBanLHS(Player pelaaja, ArrayList<Deck> banVaihtoehdot) {
-        ArrayList<Deck> p1 = new ArrayList<>();
-        ArrayList<Deck> p2 = new ArrayList<>();
-        Player toinenPelaaja;
-        if (pelaaja == this.pelaaja1) {
-            p1 = pelaaja1.lineup;
-            p2 = pelaaja2.lineup;
-            toinenPelaaja = pelaaja2;
-        } else {
-            p1 = pelaaja2.lineup;
-            p2 = pelaaja1.lineup;
-            toinenPelaaja = pelaaja1;
-        }
-        HashMap<Deck, Double> simtulos = new HashMap<>();
-        HashMap<Deck, Integer> simvoitot = new HashMap<>();
-        HashMap<Deck, Integer> simapu = new HashMap<>();
-
-        Integer simkierrokset = 1000000;
-        for (int i = 0; i <= simkierrokset; i++) {
-            Deck p1ban = banVaihtoehdot.get(rng.nextInt(banVaihtoehdot.size()));
-            Deck p2ban = p2.get(rng.nextInt(4));
-
-            simapu.putIfAbsent(p2ban, 0);
-            simapu.put(p2ban, simapu.get(p2ban) + 1);
-
-            Player voittaja = simuloiLHS(pelaaja, p1ban, pelaaja2, p2ban);
-            if (voittaja == pelaaja) {
-                simvoitot.putIfAbsent(p2ban, 0);
-                simvoitot.put(p2ban, simvoitot.get(p2ban) + 1);
-            }
-        }
-
-        ArrayList<Deck> line = new ArrayList<>();
-        simapu.keySet().forEach(s -> line.add(s));
-
-        for (int i = 0; i < line.size(); i++) {
-            Deck pakka = line.get(i);
-            simtulos.put(pakka, 1.0 * simvoitot.get(pakka) / simapu.get(pakka));
-
-        }
-        return simtulos;
-    }
+    
 
     /**
      * Simuloi yksittäisen Conquest ottelun, palauttaa voittaneen pelaajan.
      *
-     * @param pelaaja1
+     * @param player1
      * @param p1bannedclass
-     * @param pelaaja2
+     * @param player2
      * @param p2bannedclass
      * @return
      */
-    public Player simuloiConquest(Player pelaaja1, Deck p1bannedclass, Player pelaaja2, Deck p2bannedclass) {
+    public Player simulateConquest(Player player1, Deck p1bannedclass, Player player2, Deck p2bannedclass) {
         ArrayList<Deck> p1line = new ArrayList<>();
-        for (int i = 0; i < pelaaja1.lineup.size(); i++) {
-            if (!pelaaja1.lineup.get(i).equals(p1bannedclass)) {
-                p1line.add(pelaaja1.lineup.get(i));
+        for (int i = 0; i < player1.lineup.size(); i++) {
+            if (!player1.lineup.get(i).equals(p1bannedclass)) {
+                p1line.add(player1.lineup.get(i));
             }
         }
         ArrayList<Deck> p2line = new ArrayList<>();
-        for (int i = 0; i < pelaaja2.lineup.size(); i++) {
-            if (!pelaaja2.lineup.get(i).equals(p2bannedclass)) {
-                p2line.add(pelaaja2.lineup.get(i));
+        for (int i = 0; i < player2.lineup.size(); i++) {
+            if (!player2.lineup.get(i).equals(p2bannedclass)) {
+                p2line.add(player2.lineup.get(i));
             }
         }
-        Integer p1voitot = 0;
-        Integer p2voitot = 0;
+        Integer p1wins = 0;
+        Integer p2wins = 0;
 
-        while (p1voitot < 3 && p2voitot < 3) {
-            Deck p1pakka = p1line.get(rng.nextInt(3 - p1voitot));
+        while (p1wins < 3 && p2wins < 3) {
+            Deck p1deck = p1line.get(rng.nextInt(3 - p1wins));
 
-            Deck p2pakka = p2line.get(rng.nextInt(3 - p2voitot));
-            Double todennakoisyys = p1pakka.getWinrate(p2pakka);
-            Double voittaja = rng.nextDouble();
-            if (voittaja < todennakoisyys) {
-                p1voitot++;
-                p1line.remove(p1pakka);
+            Deck p2deck = p2line.get(rng.nextInt(3 - p2wins));
+            Double matchup = p1deck.getWinrate(p2deck);
+            Double outcome = rng.nextDouble();
+            if (outcome < matchup) {
+                p1wins++;
+                p1line.remove(p1deck);
             } else {
-                p2voitot++;
-                p2line.remove(p2pakka);
+                p2wins++;
+                p2line.remove(p2deck);
             }
 
         }
 
-        if (p1voitot > p2voitot) {
-            return pelaaja1;
+        if (p1wins > p2wins) {
+            return player1;
         } else {
-            return pelaaja2;
+            return player2;
         }
     }
 
     /**
      * Simuloi yksittäisen LHS-ottelun, palauttaa voittaneen pelaajan.
      *
-     * @param pelaaja1
+     * @param player1
      * @param p1bannedclass
-     * @param pelaaja2
+     * @param player2
      * @param p2bannedclass
      * @return
      */
-    public Player simuloiLHS(Player pelaaja1, Deck p1bannedclass, Player pelaaja2, Deck p2bannedclass) {
+    public Player simulateLHS(Player player1, Deck p1bannedclass, Player player2, Deck p2bannedclass) {
         ArrayList<Deck> p1line = new ArrayList<>();
-        for (int i = 0; i < pelaaja1.lineup.size(); i++) {
-            if (!pelaaja1.lineup.get(i).equals(p1bannedclass)) {
-                p1line.add(pelaaja1.lineup.get(i));
+        for (int i = 0; i < player1.lineup.size(); i++) {
+            if (!player1.lineup.get(i).equals(p1bannedclass)) {
+                p1line.add(player1.lineup.get(i));
             }
         }
         ArrayList<Deck> p2line = new ArrayList<>();
-        for (int i = 0; i < pelaaja2.lineup.size(); i++) {
-            if (!pelaaja2.lineup.get(i).equals(p2bannedclass)) {
-                p2line.add(pelaaja2.lineup.get(i));
+        for (int i = 0; i < player2.lineup.size(); i++) {
+            if (!player2.lineup.get(i).equals(p2bannedclass)) {
+                p2line.add(player2.lineup.get(i));
             }
         }
-        Integer p1voitot = 0;
-        Integer p2voitot = 0;
+        Integer p1wins = 0;
+        Integer p2wins = 0;
 
-        Boolean p1w = false;
-        Boolean p2w = false;
+        Boolean p1won = false;
+        Boolean p2won = false;
 
-        Deck p1pakka = new Deck("");
-        Deck p2pakka = new Deck("");
+        Deck p1deck = new Deck("");
+        Deck p2deck = new Deck("");
 
-        while (p1voitot < 3 && p2voitot < 3) {
-            if (!p1w) {
-                p1pakka = p1line.get(rng.nextInt(3 - p2voitot));
+        while (p1wins < 3 && p2wins < 3) {
+            if (!p1won) {
+                p1deck = p1line.get(rng.nextInt(3 - p2wins));
             }
-            if (!p2w) {
-                p2pakka = p2line.get(rng.nextInt(3 - p1voitot));
+            if (!p2won) {
+                p2deck = p2line.get(rng.nextInt(3 - p1wins));
             }
-            Double todennakoisyys = p1pakka.getWinrate(p2pakka);
-            Double voittaja = rng.nextDouble();
-            if (voittaja < todennakoisyys) {
-                p1voitot++;
-                p2line.remove(p2pakka);
-                p1w = true;
-                p2w = false;
+            Double matchup = p1deck.getWinrate(p2deck);
+            Double outcome = rng.nextDouble();
+            if (outcome < matchup) {
+                p1wins++;
+                p2line.remove(p2deck);
+                p1won = true;
+                p2won = false;
 
             } else {
-                p2voitot++;
-                p1line.remove(p1pakka);
-                p1w = false;
-                p2w = true;
+                p2wins++;
+                p1line.remove(p1deck);
+                p1won = false;
+                p2won = true;
             }
 
         }
 
-        if (p1voitot > p2voitot) {
-            return pelaaja1;
+        if (p1wins > p2wins) {
+            return player1;
         } else {
-            return pelaaja2;
+            return player2;
         }
     }
 }

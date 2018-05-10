@@ -50,7 +50,11 @@ public class Deck {
      */
     public Boolean setWinrate(Deck deck, Double winrate) {
         if (winrate > 0 && winrate <= 1) {
-            this.winrate.put(deck, winrate);
+            if (this.winrate.containsKey(deck)) {
+                this.winrate.replace(deck, winrate);
+            } else {
+                this.winrate.put(deck, winrate);
+            }
             return true;
         }
         return false;

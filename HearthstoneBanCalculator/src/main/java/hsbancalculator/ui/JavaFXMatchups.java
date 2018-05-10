@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 
 /**
  * Matchup-näkymä, tietylle pakalle listataan kaikki tietokannasta löytyvät
- * matchupit ja niitä voi muokata.
+ * matchupit, joita voi myös muokata.
  *
  * @author antlammi
  */
@@ -61,7 +61,7 @@ public class JavaFXMatchups {
         errorMSG.setText("");
         errorMSG.setTextFill(javafx.scene.paint.Color.RED);
         bp.setBottom(errorMSG);
-        
+
         GridPane gp = new GridPane();
         Label topLeftLabel = new Label(deck.name + " vs");
 

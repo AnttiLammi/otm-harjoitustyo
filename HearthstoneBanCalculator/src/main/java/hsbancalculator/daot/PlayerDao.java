@@ -30,8 +30,8 @@ public class PlayerDao implements Dao<Player, Integer> {
     /**
      * Etsitään tietokantataulusta pelaaja tunnetun id:n avulla.
      *
-     * @param key
-     * @return
+     * @param key - pelaajan tunniste id
+     * @return Pelaajan, mikäli sellainen löytyy tai null
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -56,7 +56,7 @@ public class PlayerDao implements Dao<Player, Integer> {
         stmt.close();
         rs.close();
         conn.close();
-        
+
         DeckDao dDao = new DeckDao(database);
         Deck d1 = dDao.findOne(deck1id);
         Deck d2 = dDao.findOne(deck2id);
@@ -71,7 +71,8 @@ public class PlayerDao implements Dao<Player, Integer> {
     /**
      * Etsitään kaikki tietokantataulusta löytyvät pelaajat.
      *
-     * @return
+     * @return Palauttaa listan, joka sisältää kaikki tietokannasta löytyvät
+     * pelaajat
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -106,8 +107,8 @@ public class PlayerDao implements Dao<Player, Integer> {
     /**
      * Tallennetaan tietokantatauluun uusi pelaaja.
      *
-     * @param player
-     * @return
+     * @param player - Pelaajamuuttuja, joka sisältää vähintään pakat ja nimen
+     * @return Palauttaa kyseisen pelaajan tietokannasta haettuna
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -141,8 +142,8 @@ public class PlayerDao implements Dao<Player, Integer> {
     /**
      * Etsitään nimen perusteella taulusta tietyn pelaajan id.
      *
-     * @param name
-     * @return
+     * @param name - Etsittävän pelaajan nimi
+     * @return null jos pelaajaa ei löydy, muuten pelaajan id kokonaislukuna
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -171,7 +172,7 @@ public class PlayerDao implements Dao<Player, Integer> {
     /**
      * Poistetaan tietokannasta tietyn id:n omaava pelaaja.
      *
-     * @param key
+     * @param key - Pelaajan id tietokannassa
      * @throws SQLException
      * @throws ClassNotFoundException
      */

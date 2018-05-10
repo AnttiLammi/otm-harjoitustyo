@@ -24,8 +24,8 @@ public class Calculator {
     /**
      * Konstruktori, joka pohjustaa rng muuttujan ja pelaajat 1 ja 2.
      *
-     * @param p1
-     * @param p2
+     * @param p1 - Player-olio, jonka perspektiivistä simulaatio tehdään
+     * @param p2 - Player-olio, joka on p1:n vastsutaja
      */
     public Calculator(Player p1, Player p2) {
         this.player1 = p1;
@@ -44,16 +44,17 @@ public class Calculator {
     }
 
     /**
-     * Laskee eri ban-strategioiden keskimääräisen voittoprosentin. Voidaan rajata eri bannien perusteella, parametrina formaatti.
      *
-     *
-     * @param Conquest
-     * @param p1banlist
-     * @return
+     * @param p1banlist - Lista pakoista, joita simulaatiossa pelaajalta 1
+     * saatetaan ban.
+     * @param conquest - Formaattia vastaava boolean arvo. true jos formaatti =
+     * conquest, false jos formaatti = LHS.
+     * @return Palauttaa simulaation tuloksena saadun HashMap<Deck, Double>,
+     * jossa Deck on avain ja Double voittoprosentti kun kyseinen deck on
+     * banned.
      */
-    
     public HashMap<Deck, Double> calculateBan(ArrayList<Deck> p1banlist, Boolean conquest) {
-        
+
         ArrayList<Deck> p1 = player1.lineup;
         ArrayList<Deck> p2 = player2.lineup;
 
@@ -75,9 +76,9 @@ public class Calculator {
             simhelp.put(p2ban, simhelp.get(p2ban) + 1);
             Player winner;
             if (conquest) {
-                winner = simulateConquest(player1, p1ban, player2, p2ban);
+                winner = simulateConquest(p1ban, p2ban);
             } else {
-                winner = simulateLHS(player1, p1ban, player2, p2ban);
+                winner = simulateLHS(p1ban, p2ban);
             }
             if (winner == player1) {
                 simwins.putIfAbsent(p2ban, 0);
@@ -96,18 +97,14 @@ public class Calculator {
         return simresult;
     }
 
-    
-
     /**
      * Simuloi yksittäisen Conquest ottelun, palauttaa voittaneen pelaajan.
      *
-     * @param player1
-     * @param p1bannedclass
-     * @param player2
-     * @param p2bannedclass
+     * @param p1bannedclass - Deck, joka pelaajalta 1 bannittiin tässä ottelussa
+     * @param p2bannedclass - Deck, joka pelaajalta 2 bannittiin tässä ottelussa
      * @return
      */
-    public Player simulateConquest(Player player1, Deck p1bannedclass, Player player2, Deck p2bannedclass) {
+    public Player simulateConquest(Deck p1bannedclass, Deck p2bannedclass) {
         ArrayList<Deck> p1line = new ArrayList<>();
         for (int i = 0; i < player1.lineup.size(); i++) {
             if (!player1.lineup.get(i).equals(p1bannedclass)) {
@@ -149,13 +146,13 @@ public class Calculator {
     /**
      * Simuloi yksittäisen LHS-ottelun, palauttaa voittaneen pelaajan.
      *
-     * @param player1
-     * @param p1bannedclass
-     * @param player2
-     * @param p2bannedclass
+     * @param p1bannedclass - Deck, joka pelaajalta 1 bannittiin tässä
+     * ottelussa.
+     * @param p2bannedclass - Deck, joka pelaajalta 2 bannittiin tässä
+     * ottelussa.
      * @return
      */
-    public Player simulateLHS(Player player1, Deck p1bannedclass, Player player2, Deck p2bannedclass) {
+    public Player simulateLHS(Deck p1bannedclass, Deck p2bannedclass) {
         ArrayList<Deck> p1line = new ArrayList<>();
         for (int i = 0; i < player1.lineup.size(); i++) {
             if (!player1.lineup.get(i).equals(p1bannedclass)) {

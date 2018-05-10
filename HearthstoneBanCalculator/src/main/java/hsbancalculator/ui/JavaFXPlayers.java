@@ -47,7 +47,7 @@ public class JavaFXPlayers {
      * Luokan näkymä-metodi, nappuloiden avulla siirrytään pelaajakohtaiseen
      * näkymään tai poistetaan pelaaja kokonaan tietokannasta.
      *
-     * @return
+     * @return Parent - olio, joka sisältää näkymän
      * @throws SQLException
      * @throws ClassNotFoundException
      */

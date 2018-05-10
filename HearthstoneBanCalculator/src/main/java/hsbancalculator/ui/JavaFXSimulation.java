@@ -38,13 +38,14 @@ public class JavaFXSimulation {
 
     private DeckDao dDao;
     private PlayerDao pDao;
-    private Player p1;
-    private Player p2;
+
     private Boolean conquest;
     private ArrayList<Deck> vBan;
     private MatchupsDao mDao;
     private Database db;
     private BorderPane bp;
+    public Player p1;
+    public Player p2;
     public Stage main;
 
     public JavaFXSimulation(Stage main, BorderPane bp) throws ClassNotFoundException, SQLException {
@@ -63,7 +64,7 @@ public class JavaFXSimulation {
      * Simulaation päänäkymä, jossa valitaan pelaajat ja kilpailuformaatti, sekä
      * täydennetään puuttuvat matchupit.
      *
-     * @return
+     * @return Parent - olio, joka sisältää simulaation ensimmäisen näkymän
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -86,14 +87,14 @@ public class JavaFXSimulation {
 
         VBox vb2 = new VBox();
         if (p1 != null) {
-            Button uusi = new Button("Pelaaja 1: " + p1.name);
+            Button uusi = new Button("Player 1: " + p1.name);
             uusi.setMinWidth(200);
             uusi.setMaxWidth(200);
             vb2.getChildren().add(uusi);
 
         }
         if (p2 != null) {
-            Button uusi = new Button("Pelaaja 2: " + p2.name);
+            Button uusi = new Button("Player 2: " + p2.name);
             uusi.setMinWidth(200);
             uusi.setMaxWidth(200);
             vb2.getChildren().add(uusi);
@@ -105,6 +106,16 @@ public class JavaFXSimulation {
         selectp1.setMinWidth(200);
         selectp1.setMaxWidth(200);
 
+        ToggleGroup tg2 = new ToggleGroup();
+
+        RadioButton rb1 = new RadioButton("Conquest");
+        rb1.setToggleGroup(tg2);
+        rb1.setSelected(conquest);
+
+        RadioButton rb2 = new RadioButton("LHS");
+        rb2.setSelected(!conquest);
+        rb2.setToggleGroup(tg2);
+
         selectp1.setOnAction((event) -> {
 
             List vblist = vb1.getChildren();
@@ -113,7 +124,7 @@ public class JavaFXSimulation {
                 ToggleButton tb = (ToggleButton) vblist.get(i);
 
                 if (tb.selectedProperty().getValue() == true) {
-
+                    this.conquest = rb1.selectedProperty().getValue();
                     try {
                         this.p1 = pDao.findOne(pDao.findByName(tb.getText()));
                         bp.setCenter(this.getView());
@@ -139,6 +150,7 @@ public class JavaFXSimulation {
                 if (tb.selectedProperty().getValue() == true) {
 
                     try {
+                        this.conquest = rb1.selectedProperty().getValue();
                         this.p2 = pDao.findOne(pDao.findByName(tb.getText()));
                         bp.setCenter(this.getView());
                     } catch (SQLException | ClassNotFoundException ex) {
@@ -152,38 +164,35 @@ public class JavaFXSimulation {
 
         gp.add(selectp1, 0, 3);
         gp.add(selectp2, 1, 3);
-        ToggleGroup tg2 = new ToggleGroup();
-
-        RadioButton rb1 = new RadioButton("Conquest");
-        rb1.setToggleGroup(tg2);
-        rb1.setSelected(true);
-
-        RadioButton rb2 = new RadioButton("LHS");
-
-        rb2.setToggleGroup(tg2);
 
         HBox hb = new HBox();
         hb.getChildren().addAll(rb1, rb2);
         gp.add(hb, 0, 4);
 
-        Button simuloi = new Button("simuloi");
-        simuloi.setMinWidth(100);
-        simuloi.setMaxWidth(100);
+        Button simulate = new Button("simulate");
+        simulate.setMinWidth(100);
+        simulate.setMaxWidth(100);
 
-        simuloi.setOnAction((event) -> {
+        simulate.setOnAction((event) -> {
             if (p1 != null && p2 != null) {
                 this.conquest = rb1.selectedProperty().getValue();
                 this.getMissingView();
             } else {
 
-                errorMSG.setText("Error: No players selected.");
+                errorMSG.setText("Error: Must select two players.");
             }
 
         });
-        gp.add(simuloi, 0, 5);
+        gp.add(simulate, 0, 5);
         return gp;
     }
 
+    /**
+     * Näkymä, jossa voi lisätä puuttuvia pakkoja tietokantaan simulaatiota
+     * varten
+     *
+     * @return Parent - olio, joka sisältää näkymän
+     */
     public Parent getMissingView() {
         Label errorMSG = new Label();
         errorMSG.setText("");
@@ -332,11 +341,11 @@ public class JavaFXSimulation {
             }
         });
 
-        Button simuloi = new Button("simuloi");
-        simuloi.setMinWidth(200);
-        simuloi.setMaxWidth(200);
+        Button simulate = new Button("simulate");
+        simulate.setMinWidth(200);
+        simulate.setMaxWidth(200);
 
-        simuloi.setOnAction((transition) -> {
+        simulate.setOnAction((transition) -> {
             if (smvb1.getChildren().isEmpty()) {
                 this.getBanView();
 
@@ -354,7 +363,7 @@ public class JavaFXSimulation {
         gp.add(smvb3, 2, 1);
         gp.add(smvb4, 3, 1);
         gp.add(errorMSG, 0, 3);
-        gp.add(simuloi, 2, 3);
+        gp.add(simulate, 2, 3);
         gp.add(submitAll, 3, 3);
         return gp;
     }
@@ -362,7 +371,7 @@ public class JavaFXSimulation {
     /**
      * Sivunäkymä, jossa voi halutessaan rajata vastustajan bannia.
      *
-     * @return
+     * @return Parent - olio, joka sisältää näkymän
      */
     public Parent getBanView() {
         Label errorMSG = new Label();
@@ -446,8 +455,8 @@ public class JavaFXSimulation {
         gp.add(new Text(""), 1, 1);
         gp.add(new Text(""), 2, 1);
 
-        Button simuloi = new Button("simuloi");
-        simuloi.setOnAction((event) -> {
+        Button simulate = new Button("simulate");
+        simulate.setOnAction((event) -> {
             Calculator calculator = new Calculator(p1, p2);
             try {
                 this.getResultView(calculator, this.conquest);
@@ -455,9 +464,9 @@ public class JavaFXSimulation {
                 errorMSG.setText(ex.toString());
             }
         });
-        simuloi.setMinWidth(100);
-        simuloi.setMaxWidth(100);
-        gp.add(simuloi, 0, 1);
+        simulate.setMinWidth(100);
+        simulate.setMaxWidth(100);
+        gp.add(simulate, 0, 1);
 
         return gp;
     }
@@ -466,9 +475,12 @@ public class JavaFXSimulation {
      * Tulosnäkymä, kutsutaan simulaatio-luokkaa ja nähdään simulaation
      * tulokset.
      *
-     * @param calculator
-     * @param conquest
-     * @return
+     * @param calculator - Aiemmassa näkymässä luotu Calculator-olio, joka
+     * toteuttaa simulaation.
+     * @param conquest - Aiemmassa näkymässä luotu Boolean-muuttuja, jonka arvo
+     * määrää kilpailuformaatin. Jos true, formaatti on Conquest. Jos false,
+     * formaatti on LHS.
+     * @return Parent - olio, joka sisältää näkymän
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -489,7 +501,7 @@ public class JavaFXSimulation {
         }
         HashMap<Deck, Double> tulos = new HashMap<>();
         tulos = calculator.calculateBan(vBan, conquest);
-        
+
         vBan.clear();
         GridPane gp = new GridPane();
         this.bp.setCenter(gp);
@@ -537,8 +549,6 @@ public class JavaFXSimulation {
         }
         gp.add(vb1, 0, 0);
         gp.add(vb2, 1, 0);
-        p1 = null;
-        p2 = null;
         return gp;
     }
 }

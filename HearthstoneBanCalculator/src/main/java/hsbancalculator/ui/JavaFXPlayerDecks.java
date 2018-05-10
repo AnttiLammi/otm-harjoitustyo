@@ -55,7 +55,7 @@ public class JavaFXPlayerDecks {
     /**
      * Listataan pelaajan pakat ja mahdollistetaan niiden korvaaminen.
      *
-     * @return
+     * @return Parent - olio, joka sisältää näkymän
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -64,7 +64,7 @@ public class JavaFXPlayerDecks {
         errorMSG.setText("");
         errorMSG.setTextFill(Color.RED);
         bp.setBottom(errorMSG);
-        
+
         GridPane gp = new GridPane();
         Button topLeftButton = new Button(player.name);
         topLeftButton.setMinWidth(200.0);

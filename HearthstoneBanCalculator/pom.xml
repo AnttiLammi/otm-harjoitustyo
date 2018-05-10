@@ -56,8 +56,7 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.0</version>
-                <configuration>
-                    
+                <configuration>                
                     <excludes>
                         <exclude>hsbancalculator/ui/*</exclude>
                     </excludes>

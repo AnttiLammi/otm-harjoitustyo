@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- * Pakkanäkymä.
+ * Sovelluksen pakkanäkymä.
  *
  * @author antlammi
  */
@@ -44,7 +44,7 @@ public final class JavaFXDecks {
      * pakat. Klikkaamalla pakkojen nimiä voi siirtyä niiden Matchup-näkymiin ja
      * delete nappuloilla ne voidaan poistaa.
      *
-     * @return
+     * @return Parent - olio, joka sisältää näkymän
      * @throws SQLException
      * @throws ClassNotFoundException
      */

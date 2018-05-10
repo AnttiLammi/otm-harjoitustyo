@@ -5,32 +5,19 @@ package hsbancalculator;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import hsbancalculator.ui.*;
-
 import hsbancalculator.ui.JavaFXDecks;
 import hsbancalculator.ui.JavaFXMain;
 import hsbancalculator.ui.JavaFXPlayers;
 import hsbancalculator.ui.JavaFXSimulation;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -45,13 +32,12 @@ public class HearthstoneBanCalculator extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //TextUI txU = new TextUI();
 
         launch(args);
     }
 
     /**
-     * Käynnistää sovelluksen, pohjustaa eri ui-luokat ja näiden välisen
+     * Käynnistää sovelluksen: pohjustaa eri ui-luokat ja näiden välisen
      * navigaation.
      *
      * @param main
@@ -73,7 +59,7 @@ public class HearthstoneBanCalculator extends Application {
         Button mainview = new Button("main");
         Button decks = new Button("decks");
         Button players = new Button("players");
-        Button simulation = new Button("simulaatio");
+        Button simulation = new Button("simulation");
 
         menu.getChildren().addAll(mainview, decks, players, simulation);
 
@@ -96,6 +82,8 @@ public class HearthstoneBanCalculator extends Application {
         });
         decks.setOnAction((event) -> {
             try {
+                jfxs.p1 = null;                 //Varmistetaan, että jos muutetaan tietoja tietokannassa
+                jfxs.p2 = null;                 //Simulaatiota ei yritetä ajaa vanhentuneella tiedolla
                 bp.setCenter(jfxd.getView());
             } catch (SQLException | ClassNotFoundException ex) {
                 errorMSG.setText(ex.toString());
@@ -104,6 +92,8 @@ public class HearthstoneBanCalculator extends Application {
         players.setOnAction((event) -> {
 
             try {
+                jfxs.p1 = null;
+                jfxs.p2 = null;
                 bp.setCenter(jfxp.getView());
             } catch (SQLException | ClassNotFoundException ex) {
                 errorMSG.setText(ex.toString());

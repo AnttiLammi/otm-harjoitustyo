@@ -22,7 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- * Sovelluksen päänäkymä.
+ * Sovelluksen päänäkymä, jossa lisätään pakkoja ja pelaajia.
  *
  * @author antlammi
  */
@@ -52,7 +52,7 @@ public final class JavaFXMain {
      * Palauttaa näkymän, jossa voidaan lisätä kahdelle pelaajalle pakat
      * tietokantaan, sekä tallettaa samalla nämä pelaajat.
      *
-     * @return
+     * @return Parent-olio, joka sisältää näkymän
      */
     public Parent getView() {
         Label errorMSG = new Label();
@@ -99,10 +99,10 @@ public final class JavaFXMain {
                 deck8.setText(line2.get(3).name);
             }
         }
-        Label l1 = new Label("Omat Pakat");
-        Label l2 = new Label("Vastustajan Pakat");
+        Label l1 = new Label("Player 1 decks");
+        Label l2 = new Label("Player 2 decks");
 
-        Button omat = new Button("Lisää omat pakat");
+        Button omat = new Button("submit decks - player 1");
         omat.setMinWidth(400);
         omat.setMaxWidth(400);
         omat.setOnAction((event) -> {
@@ -142,7 +142,7 @@ public final class JavaFXMain {
             }
         });
 
-        Button vastustajan = new Button("Lisää vastustajan pakat");
+        Button vastustajan = new Button("submit decks - player 2");
         vastustajan.setMinWidth(400);
         vastustajan.setMaxWidth(400);
         vastustajan.setOnAction((event) -> {
@@ -197,8 +197,8 @@ public final class JavaFXMain {
         gp.add(omat, 0, 5);
         gp.add(vastustajan, 1, 5);
 
-        TextField p1name = new TextField("Pelaajan 1 nimi");
-        TextField p2name = new TextField("Pelaajan 2 nimi");
+        TextField p1name = new TextField("Player 1 name");
+        TextField p2name = new TextField("Player 2 name");
         if (p1n != null) {
             p1name.setText(p1n);
         }
@@ -208,8 +208,8 @@ public final class JavaFXMain {
 
         gp.add(p1name, 0, 6);
         gp.add(p2name, 1, 6);
-        Button p1db = new Button("Tallenna pelaaja 1 tietokantaan");
-        Button p2db = new Button("Tallenna pelaaja 2 tietokantaan");
+        Button p1db = new Button("submit player 1");
+        Button p2db = new Button("submit player 2");
         p1db.setMinWidth(400);
         p1db.setMaxWidth(400);
 

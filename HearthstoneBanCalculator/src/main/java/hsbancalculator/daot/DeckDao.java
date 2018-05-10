@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Deck-taulun käsittelyoperaatiot.
+ * Deck-tietokantataulua koskevat operaatiot.
  *
  * @author antlammi
  */
@@ -26,8 +26,8 @@ public class DeckDao implements Dao<Deck, Integer> {
     /**
      * Hakee tunnetun id:n avulla pakan taulusta.
      *
-     * @param key
-     * @return
+     * @param key - Deckin tunniste id tietokannassa
+     * @return null jos pelaajaa ei löydy, muutoin löydetty pakka
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -56,7 +56,8 @@ public class DeckDao implements Dao<Deck, Integer> {
     /**
      * Hakee kaikki taulusta löytyvät pakat ja palauttaa ne listana.
      *
-     * @return
+     * @return Palauttaa listan, joka sisältää kaikki tietokannasta löytyvät
+     * pakat
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -78,8 +79,9 @@ public class DeckDao implements Dao<Deck, Integer> {
     /**
      * Lisää uuden pakan tauluun tai palauttaa null, mikäli se löytyy jo.
      *
-     * @param paramDeck
-     * @return
+     * @param paramDeck - Lisättävä Deck-olio
+     * @return null mikäli pakka löytyy jo tietokantataulusta, muutoin lisätty
+     * pakka
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -88,7 +90,7 @@ public class DeckDao implements Dao<Deck, Integer> {
         Deck d = findByName(paramDeck.name);
 
         if (d != null) {
-            return null; //tietojen päivitys tähän
+            return null;
         }
 
         try (Connection conn = database.getConnection()) {
@@ -103,8 +105,8 @@ public class DeckDao implements Dao<Deck, Integer> {
     /**
      * Hakee tunnetun nimen perusteella pakan id:n.
      *
-     * @param name
-     * @return
+     * @param name - etsittävän pakan nimi
+     * @return pakan id tietokannassa
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -133,8 +135,8 @@ public class DeckDao implements Dao<Deck, Integer> {
     /**
      * Hakee tunnetun nimen avulla tietyn pakan taulusta.
      *
-     * @param name
-     * @return
+     * @param name - etsittävän pakan nimi
+     * @return Tietokannasta löydetty pakka tai null
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -164,7 +166,7 @@ public class DeckDao implements Dao<Deck, Integer> {
      * Poisto-operaatio pakan id:tä hyödyntäen, samalla poistaa tähän
      * sidonnaiset arvot Player ja Matchups tauluista.
      *
-     * @param key
+     * @param key - poistettavan pakan id
      * @throws SQLException
      * @throws ClassNotFoundException
      */

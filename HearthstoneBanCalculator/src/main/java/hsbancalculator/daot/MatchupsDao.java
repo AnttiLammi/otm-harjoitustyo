@@ -24,9 +24,10 @@ public class MatchupsDao {
     /**
      * Hakee tietokantataulusta tietyn matchupin eri pakan id:tä hyödyntäen.
      *
-     * @param key1
-     * @param key2
-     * @return
+     * @param key1 - pakan tunniste deck_id tietokannassa
+     * @param key2 - pakan tunniste deck_id tietokannassa
+     * @return Double luku joka vastaa matchuppia key1 vs key2 taimatchupin
+     * puuttuessa null
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -55,10 +56,10 @@ public class MatchupsDao {
      * Tallentaa liukuluvun matchups tauluun tai mikäli kyseinen matchup löytyy
      * jo, tallentaa arvon tilalle.
      *
-     * @param key1
-     * @param key2
-     * @param wr
-     * @return
+     * @param key1 - pakan tunniste deck_id tietokannassa
+     * @param key2 - pakan tunniste deck_id tietokannassa
+     * @param wr - kahden pakan välinen matchup liukulukuna(0-1)
+     * @return Palauttaa pakkojen välisen matchupin
      * @throws SQLException
      * @throws ClassNotFoundException
      */

@@ -26,4 +26,5 @@
 |2.5. |2       |Release, dokumentointi|
 |4.5.|2        |Päivityksiä käyttöliittymään|
 |5.5.|2        |Virhetilanteiden käsittelyä|
-|**yht.** | 47 | - | 
+|10.5.|3       |Koodin siistintää, loppupalautuksen valmistelua|
+|**yht.** | 50 | - | 

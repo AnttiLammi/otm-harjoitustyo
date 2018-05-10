@@ -92,7 +92,7 @@ public class CalculatorTest {
         Calculator calc = this.calculator;
         Player expResult = this.calculator.player1;
         Player expResult2 = this.calculator.player2;
-        Player result = calc.simulateConquest(pelaaja1, p1bannedclass, pelaaja2, p2bannedclass);
+        Player result = calc.simulateConquest(p1bannedclass, p2bannedclass);
         if (result == expResult) {
             assertEquals(expResult, result);
         } else if (result == expResult2) {
@@ -116,7 +116,7 @@ public class CalculatorTest {
         Calculator calc = this.calculator;
         Player expResult = this.calculator.player1;
         Player expResult2 = this.calculator.player2;
-        Player result = calc.simulateLHS(pelaaja1, p1bannedclass, pelaaja2, p2bannedclass);
+        Player result = calc.simulateLHS(p1bannedclass, p2bannedclass);
         if (result == expResult) {
             assertEquals(expResult, result);
         } else if (result == expResult2) {
@@ -138,7 +138,7 @@ public class CalculatorTest {
         Calculator calc = this.calculator;
         Player expResult = p1;
 
-        Player result = calc.simulateLHS(p1, p1bannedclass, p2, p2bannedclass);
+        Player result = calc.simulateLHS(p1bannedclass, p2bannedclass);
         assertEquals(expResult.name, result.name);
 
     }

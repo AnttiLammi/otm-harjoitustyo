@@ -17,7 +17,7 @@ Delete-napin toimintaa kenties ei tarvitse avata. Painamalla tässä näkymäss�
 
 <img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/hsbancalculator_ohje_3.png">
 
-Mikäli pakkojen välinen matchup löytyy jo, se ilmestyy tekstikenttään. Lisäämällä tai muokkaamalla näitä arvoja ja painamalla kyseisen rivin submit nappia, voidaan lisätä tietokantaan pakkojen välinen matchup. Lisäksi tässä näkymässä voi navigoida eri pakkojen välillä klikkaamalla niiden nimiä vasemmalla. Siirrytään seuraavaksi näkymään, jossa voidaan käsitellä pelaajien tietoja players-napin avulla.
+Mikäli pakkojen välinen matchup löytyy jo, se ilmestyy tekstikenttään. Lisäämällä tai muokkaamalla näitä arvoja ja painamalla kyseisen rivin submit nappia, voidaan lisätä tietokantaan pakkojen välinen matchup. Lisäksi tässä näkymässä voi navigoida eri pakkojen välillä klikkaamalla niiden nimiä vasemmalla. Siirrytään seuraavaksi näkymään, jossa voidaan käsitellä pelaajien tietoja players-napin avulla. Sovelluksen tuoreimmassa versiossa on lisäksi olemassa submit all nappi, jota ei kuvassa näy. Tämän avulla voi lisätä kaikki pakat kerralla tietokantaan
 
 <img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/hsbancalculator_ohje_4.png">
 
@@ -45,4 +45,4 @@ Nähdään, että tässä tapauksessa kannattaisi siis bannata Quest Rogue, vaik
 
 <img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/hsbancalculator_ohje_10.png">
 
-Kappas, tällöin ilmestyy lista tietokannasta puuttuvista matchupeista. Tämän näkymän avulla voi täydentää vain puuttuvat pakat tietokantaan ja edetä simulaation kanssa odottelematta turhia. 
+Kappas, tällöin ilmestyy lista tietokannasta puuttuvista matchupeista. Tämän näkymän avulla voi täydentää vain puuttuvat pakat tietokantaan ja edetä simulaation kanssa odottelematta turhia. Sovelluksen tuoreimmassa versiossa tämä on tehty kokonaan omaksi näkymäkseen, eli ylhäällä ei näy valittavaa formaattia ym.

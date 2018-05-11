@@ -45,3 +45,5 @@ Alla oleva kaavio kuvastaa miten graafisella pakkojen ja pelaajien lisääminen 
 
 <img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/hsbcSeq_2.png">
 
+## Ohjelman rakenteeseen jääneet ongelmat
+Sovelluksen main-luokan *HearthstoneBanCalculator.java* tulisi todellisuudessa olla käyttöliittymäluokka tai osa sen toiminallisuudesta tulisi toteuttaa käyttöliittymäluokassa. Tällä hetkellä main-luokassa käyttöliittymäluokkien luomisen lisäksi myös luodaan sovelluksen navigaatiopalkki, eikä tämä ole kovin järkevää.

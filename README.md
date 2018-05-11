@@ -8,7 +8,7 @@ Ohjelmistotekniikan menetelmät kurssia varten suoritettava sovellus, jonka avul
 [Arkkitehtuuri](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)    
 [Työaikakirjanpito](https://github.com/AnttiLammi/otm-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 ## Releaset
-[Viimeisimmän version lataaminen](https://github.com/AnttiLammi/otm-harjoitustyo/releases/tag/viikko7%2Ffinal)  
+[Viimeisimmän version lataaminen](https://github.com/AnttiLammi/otm-harjoitustyo/releases/download/viikko7%2Ffinal/hsbancalculator.jar)  
   
 [Loppupalautus](https://github.com/AnttiLammi/otm-harjoitustyo/releases/tag/viikko7%2Ffinal)    
 [Viikko 6](https://github.com/AnttiLammi/otm-harjoitustyo/releases/tag/viikko6)  

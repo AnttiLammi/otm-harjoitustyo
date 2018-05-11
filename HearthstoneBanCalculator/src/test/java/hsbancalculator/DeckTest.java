@@ -49,7 +49,7 @@ public class DeckTest {
     }
 
     @Test
-    public void winratenAsetusToimii() {
+    public void setWinrateTest() {
         Deck deck = new Deck("Control Warlock");
         Deck vastassa = new Deck("Dude Paladin");
 
@@ -66,7 +66,7 @@ public class DeckTest {
     }
 
     @Test
-    public void winratenGettausToimii(){
+    public void getWinrateTest(){
         deck1.setWinrate(deck2, 0.6);
         
         assertEquals((Double) 0.6, deck1.getWinrate(deck2));
@@ -75,11 +75,11 @@ public class DeckTest {
         assertEquals(eR, deck1.getWinrate(deck3));
     }
     @Test 
-    public void tulostusToimii(){
+    public void toStringTest(){
         assertEquals("Tempo Rogue", deck1.toString());
     }
     @Test
-    public void wrHashMapinGettausToimii(){
+    public void getDeckWinratesTest(){
         Random rng = new Random();
         
         Double wr0 = rng.nextDouble();

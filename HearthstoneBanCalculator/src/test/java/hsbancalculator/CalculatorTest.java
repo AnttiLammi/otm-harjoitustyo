@@ -73,78 +73,63 @@ public class CalculatorTest {
     public void tearDown() {
     }
 
-    @Test
-    public void constructorToimii() {
-        Player pelaaja1 = new Player(new Deck("1"), new Deck("2"), new Deck("3"), new Deck("4"));
-        Player pelaaja2 = new Player(new Deck("5"), new Deck("6"), new Deck("7"), new Deck("8"));
-        Calculator calculatorT = new Calculator(pelaaja1, pelaaja2);
-        assertEquals(pelaaja1, calculatorT.player1);
-        assertEquals(pelaaja2, calculatorT.player2);
-    }
+    
+
+ 
 
     @Test
-    public void conquestSimulaatioTest() {
-
-        Player pelaaja1 = this.calculator.player1;
-        Deck p1bannedclass = this.calculator.player1.lineup.get(0);
-        Player pelaaja2 = this.calculator.player2;
-        Deck p2bannedclass = this.calculator.player2.lineup.get(0);
-        Calculator calc = this.calculator;
-        Player expResult = this.calculator.player1;
-        Player expResult2 = this.calculator.player2;
-        Player result = calc.simulateConquest(p1bannedclass, p2bannedclass);
-        if (result == expResult) {
-            assertEquals(expResult, result);
-        } else if (result == expResult2) {
-            assertEquals(expResult2, result);
-        } else {
-
-            fail("Kumpikaan pelaajista ei voittanut");
-        }
-    }
-
-    /**
-     * Test of simuloiLHS method, of class Calculator.
-     */
-    @Test
-    public void lhsSimulaatioTest() {
-
-        Player pelaaja1 = this.calculator.player1;
-        Deck p1bannedclass = this.calculator.player1.lineup.get(0);
-        Player pelaaja2 = this.calculator.player2;
-        Deck p2bannedclass = this.calculator.player2.lineup.get(0);
-        Calculator calc = this.calculator;
-        Player expResult = this.calculator.player1;
-        Player expResult2 = this.calculator.player2;
-        Player result = calc.simulateLHS(p1bannedclass, p2bannedclass);
-        if (result == expResult) {
-            assertEquals(expResult, result);
-        } else if (result == expResult2) {
-            assertEquals(expResult2, result);
-        }
-    }
-
-    @Test
-    public void lhsSimulaatioTest2() {
+    public void simulateConquestTest() {
         Player p1 = this.calculator.player1;
+        p1.setName("p1");
         Deck p1bannedclass = p1.lineup.get(0);
 
         Player p2 = this.calculator.player2;
+        p2.setName("p2");
         Deck p2bannedclass = p2.lineup.get(0);
 
         for (int j = 0; j < p2.lineup.size(); j++) {
-            p1.lineup.get(1).setWinrate(p2.lineup.get(j), 100.0);
+            p1.lineup.get(1).setWinrate(p2.lineup.get(j), 55.0);
+        }
+        Calculator calc = new Calculator(p1, p2);
+        Random rng = new Random();
+        rng.setSeed(1);
+        calc.setRandom(rng);
+        Player expResult = p1;
+
+        Player result = calc.simulateConquest(p1bannedclass, p2bannedclass);
+        assertEquals(expResult.name, result.name);
+
+    }
+
+  
+
+    @Test
+    public void simulateLHSTest() {
+        Player p1 = this.calculator.player1;
+        p1.setName("p1");
+        Deck p1bannedclass = p1.lineup.get(0);
+
+        Player p2 = this.calculator.player2;
+        p2.setName("p2");
+        Deck p2bannedclass = p2.lineup.get(0);
+
+        for (int j = 0; j < p2.lineup.size(); j++) {
+            p1.lineup.get(1).setWinrate(p2.lineup.get(j), 75.0);
         }
         Calculator calc = this.calculator;
+        Random rng = new Random();
+        rng.setSeed(1);
+        calc.setRandom(rng);
         Player expResult = p1;
 
         Player result = calc.simulateLHS(p1bannedclass, p2bannedclass);
         assertEquals(expResult.name, result.name);
 
     }
+    
 
     @Test
-    public void parasBanLHSTest() {
+    public void calculateBanLHS() {
 
         Player p1 = this.calculator.player1;
         Player p2 = this.calculator.player2;
@@ -176,9 +161,43 @@ public class CalculatorTest {
             }
         }
     }
-
     @Test
-    public void parasBanConquestTest() {
+    public void calculateBanRestricted() {
+
+        Player p1 = this.calculator.player1;
+        Player p2 = this.calculator.player2;
+        Deck bb = null;
+        for (int i = 0; i < p1.lineup.size(); i++) {
+            p1.setWinrate(p1.lineup.get(i), p2.lineup.get(0), 0.40);
+            p2.setWinrate(p2.lineup.get(0), p1.lineup.get(i), 0.60);
+            bb = p2.lineup.get(0);
+        }
+
+        Random random = new Random();
+        random.setSeed(1);
+        calculator.setRandom(random);
+        Boolean conquest = false;
+
+        ArrayList<Deck> vBan = new ArrayList<Deck>();
+        vBan.add(p1.lineup.get(1));
+        vBan.add(p1.lineup.get(2));
+        HashMap<Deck, Double> dd = calculator.calculateBan(vBan, conquest);
+        ArrayList<Deck> p2decks = new ArrayList<>();
+        dd.keySet().forEach(s -> p2decks.add(s));
+        for (int i = 0; i < p2decks.size(); i++) {
+            if (p2decks.get(i).name.equals(bb.name)) {
+                bb = p2decks.get(i);
+            }
+        }
+        Double max = dd.get(bb);
+        for (int i = 0; i < 4; i++) {
+            if (dd.get(p2.lineup.get(i)) > max) {
+                fail("paras ban ei ollut odotettu");
+            }
+        }
+    }
+    @Test
+    public void calculateBanConquest() {
         Player p1 = this.calculator.player1;
         Player p2 = this.calculator.player2;
         Deck bb = null;

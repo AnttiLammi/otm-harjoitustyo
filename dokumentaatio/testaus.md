@@ -14,6 +14,6 @@ Sovelluksen pysyväistalletusta testaavat DaoTestit *DeckDaoTest.java*, *Matchup
 
 ### Testauskattavuus
 Käyttöliittymää lukuunottamatta testien rivikattavuus on 86% ja haaraumakattavuus 95%. Näissä on lisäksi mukana vielä sovelluksen main-luokka, joka käytännössä voitaisiin lukea käyttöliittymäluokaksi.
-
+<img src="https://raw.githubusercontent.com/AnttiLammi/otm-harjoitustyo/master/dokumentaatio/kuvat/Testikattavuus.png">
 ### Ongelmia
 Pääosin tilanteet, joissa voisi tulla omituisia syötteitä joista koituisi ongelmia käsitellään käyttöliittymäluokkien yhteydessä. Voi kuitenkin olla, että sovelluslogiikka luokat eivät aina käsittele mahdollisten käyttöliittymäluokkien muutosten aiheuttamia ongelmasyötteitä tarpeeksi hyvin, eikä näitä välttämättä oteta testeissä tarpeeksi huomioon.
